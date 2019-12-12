@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "910028265840",
+    "firebase_url": "https://atlier-49a3a.firebaseio.com",
+    "project_id": "atlier-49a3a",
+    "storage_bucket": "atlier-49a3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:910028265840:android:67fec51799862fa557d7b5",
+        "android_client_info": {
+          "package_name": "com.example.atelier"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "910028265840-kb8sc2fltfglr19j1bv127i9qs3r6m7k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9VMgxXki7kfpcRc_DPGPbfhJoQ_8Gg5k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "910028265840-kb8sc2fltfglr19j1bv127i9qs3r6m7k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
