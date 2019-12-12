@@ -143,7 +143,7 @@ public class AdminUploadActivity extends AppCompatActivity {
                     Posts upload;
 
                     //can the constructor from the Posts class in "models" package
-                    upload = new Posts(mEditTextFileName.getText().toString().trim(), downloadUrl.toString());
+                    upload = new Posts(downloadUrl.toString(),mEditTextFileName.getText().toString().trim());
 
                     String uploadId = mDatabaseRef.push().getKey();
                     mDatabaseRef.child(uploadId).setValue(upload);
