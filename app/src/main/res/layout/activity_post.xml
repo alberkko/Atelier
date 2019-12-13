@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cardView">
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <LinearLayout
@@ -33,6 +32,8 @@
                         android:id="@+id/username_aa3"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
                         android:layout_marginEnd="108dp"
                         android:layout_marginRight="108dp"
                         android:fontFamily="sans-serif"
@@ -47,6 +48,9 @@
                         android:id="@+id/username_aa2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
                         android:layout_marginEnd="256dp"
                         android:layout_marginRight="256dp"
                         android:fontFamily="sans-serif"
@@ -55,6 +59,7 @@
                         android:textSize="14sp"
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toEndOf="@+id/view2"
                         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
@@ -62,6 +67,8 @@
                         android:id="@+id/button_send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginRight="16dp"
                         android:text="Send"
                         android:textColor="#2196F3"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,11 +79,13 @@
                         android:id="@+id/view2"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginLeft="16dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="8dp"
                         android:elevation="12dp"
                         app:cardCornerRadius="40dp"
                         app:cardElevation="0dp"
+                        app:layout_constraintEnd_toStartOf="@+id/username_aa3"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
@@ -86,10 +95,11 @@
                         android:id="@+id/recycler_view_too"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="40dp"
                         android:background="#FFFFFF"
                         android:nestedScrollingEnabled="false"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/username_aa3"
+                        app:layout_constraintVertical_bias="0.2"
                         tools:layout_editor_absoluteX="0dp">
 
                     </androidx.recyclerview.widget.RecyclerView>
@@ -129,13 +139,16 @@
                         android:id="@+id/comment_field"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginTop="8dp"
                         android:ems="10"
                         android:hint="Write a comment"
                         android:inputType="textPersonName"
                         android:textSize="14sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/button_send"
-                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/recycler_view_too"
                         app:layout_constraintVertical_bias="0.0" />
