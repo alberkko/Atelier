@@ -1,7 +1,9 @@
 package com.example.atelier.activities;
 
+import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -44,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private ValueEventListener mDBListener;
     private TextView mlogout;
     private ImageView mthreedots;
+    private TextView mcomment_btn;
+    private TextView mbookmark_btn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +70,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         mAdapter.setOnItemClickListenerMain(MainActivity.this);
        // mlogout = findViewById(R.id.logout);
         mthreedots = findViewById(R.id.threedots);
+
+        mcomment_btn = findViewById(R.id.comment_icon);
+        mbookmark_btn = findViewById(R.id.bookmark_icon);
 
         getSupportActionBar().hide();
 
@@ -115,6 +122,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             }
         });
 
+
+        //Comment icon on click
+        mcomment_btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), PostActivity.class);
+                startActivity(i);
+            }
+        });
+
+
         //DISPLAY ON LOGIN ONLY
 
 //        if (mCurrentUser != null) {         //LOGGED IN
@@ -143,8 +162,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             }
         });
 
-
     }
+
+
+
 
         //Profile on Menu Slider
 //    public void profile(MenuItem item) {
