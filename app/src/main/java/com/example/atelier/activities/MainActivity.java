@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         setContentView(R.layout.activity_main);
 
         //  mAuth = FirebaseAuth.getInstance();
-   //     mCurrentUser = mAuth.getCurrentUser();
+        //     mCurrentUser = mAuth.getCurrentUser();
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         mAdapter = new RecyclerViewAdapterMain(MainActivity.this, mUploads);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListenerMain(MainActivity.this);
-       // mlogout = findViewById(R.id.logout);
+        // mlogout = findViewById(R.id.logout);
         mthreedots = findViewById(R.id.threedots);
 
         mcomment_btn = findViewById(R.id.comment_icon);
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 //        }
 
         //GET DATA FROM FIREBASE
-         mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mUploads.clear();
@@ -119,17 +119,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-        //Comment icon on click
-        mcomment_btn.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), PostActivity.class);
-                startActivity(i);
             }
         });
 
@@ -152,22 +141,32 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 //
 
         //OPEN AND CLOSE MENU
-        mthreedots.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DrawerLayout navDrawer = findViewById(R.id.drawer_layout);
-                // If the navigation drawer is not open then open it, if its already open then close it.
-                if (!navDrawer.isDrawerOpen(Gravity.END)) navDrawer.openDrawer(Gravity.END);
-                else navDrawer.closeDrawer(Gravity.START);
-            }
-        });
-
-    }
-
+//        mthreedots.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                DrawerLayout navDrawer = findViewById(R.id.drawer_layout);
+//                // If the navigation drawer is not open then open it, if its already open then close it.
+//                if (!navDrawer.isDrawerOpen(Gravity.END)) navDrawer.openDrawer(Gravity.END);
+//                else navDrawer.closeDrawer(Gravity.START);
+//            }
+//        });
+//
 
 
+    mthreedots.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
-        //Profile on Menu Slider
+           Intent startIntent = new Intent(MainActivity.this, PostActivity.class);
+           startActivity(startIntent);
+
+        }
+    });
+
+}
+
+
+//Profile on Menu Slider
 //    public void profile(MenuItem item) {
 //        if (mCurrentUser != null) {
 //            Intent startIntent = new Intent(MainActivity.this, UserProfileActivity.class);
