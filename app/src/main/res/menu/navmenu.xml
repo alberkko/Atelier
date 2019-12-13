@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_profile"
+            android:title="My profile"
+            />
+        <item
+            android:id="@+id/nav_map"
+            android:title="View all buildings on Map"
+            />
+        <item
+            android:id="@+id/nav_add"
+            android:title="Add a building"
+
+            />
+
+
+    </group>
+
+    <group>
+        <item
+            android:id="@+id/nav_criteria"
+            android:title="Criteria of categorization" />
+    </group>
+    <group>
+        <item
+            android:id="@+id/nav_about"
+            android:title="About the project" />
+    </group>
+
+</menu>

@@ -2,6 +2,8 @@ package com.example.atelier.activities;
 
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -42,10 +44,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private ValueEventListener mDBListener;
     private TextView mlogout;
     private ImageView mthreedots;
-    private EditText msearch;
-    private TextView explore;
-    public double lattitude, longitude;
-    LocationManager locationManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +52,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         //  mAuth = FirebaseAuth.getInstance();
    //     mCurrentUser = mAuth.getCurrentUser();
-        // mDrawerLayout = findViewById(R.id.drawer_layout);
-        // mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
-        // mDrawerLayout.addDrawerListener(mToggle);
-        // mToggle.syncState();
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
         mRecyclerView = findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mUploads = new ArrayList<>();
@@ -67,14 +65,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListenerMain(MainActivity.this);
        // mlogout = findViewById(R.id.logout);
-        // mthreedots = findViewById(R.id.threedots);
-//        Typeface typeface = Typeface.createFromAsset(getAssets(), "font/productsans_bold.ttf");
-   //     explore.setTypeface(typeface);
+        mthreedots = findViewById(R.id.threedots);
 
         getSupportActionBar().hide();
-//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-//        ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-
 
         //GET NAME TO PUT ON THE SLIDE MENU
 //        if (mCurrentUser != null) {
@@ -103,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 //        }
 
         //GET DATA FROM FIREBASE
-        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mUploads.clear();
@@ -122,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             }
         });
 
-    }
         //DISPLAY ON LOGIN ONLY
 
 //        if (mCurrentUser != null) {         //LOGGED IN
@@ -141,40 +133,18 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 //
 
         //OPEN AND CLOSE MENU
-//        mthreedots.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                DrawerLayout navDrawer = findViewById(R.id.drawer_layout);
-//                // If the navigation drawer is not open then open it, if its already open then close it.
-//                if (!navDrawer.isDrawerOpen(Gravity.END)) navDrawer.openDrawer(Gravity.END);
-//                else navDrawer.closeDrawer(Gravity.START);
-//            }
-//        });
-//
-//
-//    }
+        mthreedots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout navDrawer = findViewById(R.id.drawer_layout);
+                // If the navigation drawer is not open then open it, if its already open then close it.
+                if (!navDrawer.isDrawerOpen(Gravity.END)) navDrawer.openDrawer(Gravity.END);
+                else navDrawer.closeDrawer(Gravity.START);
+            }
+        });
 
-//    private void search(String s) {
-//        Query query = mDatabaseRef.orderByChild("name").startAt(s).endAt(s + "\uf8ff");
-//        query.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.hasChildren()) {
-//                    mUploads.clear();
-//                    for (DataSnapshot searchSnapshot : dataSnapshot.getChildren()) {
-//                        final Buildings buildings = searchSnapshot.getValue(Buildings.class);
-//                        buildings.setKey(searchSnapshot.getKey());
-//                        mUploads.add(buildings);
-//                    }
-//                    mAdapter.notifyDataSetChanged();
-//                }
-//            }
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                Toast.makeText(MainActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
+
+    }
 
         //Profile on Menu Slider
 //    public void profile(MenuItem item) {

@@ -44,10 +44,6 @@ public class AdminUploadActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
     private DatabaseReference mDatabaseUser;
-    private double longt;
-    private double lat;
-    private String strUserName;
-    private String strAddress;
 
 
     @Override
@@ -84,12 +80,12 @@ public class AdminUploadActivity extends AppCompatActivity {
                     Toast.makeText(AdminUploadActivity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
                 } else {
                     uploadFile();
+                    openImagesActivity();
                 }
             }
         });
 
     }
-
 
 
     private void openFileChooser() {
@@ -148,7 +144,6 @@ public class AdminUploadActivity extends AppCompatActivity {
                     String uploadId = mDatabaseRef.push().getKey();
                     mDatabaseRef.child(uploadId).setValue(upload);
 
-                    openImagesActivity();
 
                 }
             })
@@ -168,6 +163,7 @@ public class AdminUploadActivity extends AppCompatActivity {
         }
     }
 
+    //method to go to the list of posts (main activity) after pressing upload
     private void openImagesActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -175,4 +171,5 @@ public class AdminUploadActivity extends AppCompatActivity {
 
 
 }
+
 

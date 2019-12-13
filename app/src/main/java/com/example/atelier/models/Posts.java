@@ -25,6 +25,7 @@ public class Posts {
     public String getDescription() {
         return description;
     }
+
     public String getImage_url() {
         return image_url;
     }
