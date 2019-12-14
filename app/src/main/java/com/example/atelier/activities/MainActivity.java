@@ -1,13 +1,9 @@
 package com.example.atelier.activities;
 
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
-import android.speech.tts.TextToSpeech;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -153,15 +149,16 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 //
 
 
-    mthreedots.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-           Intent startIntent = new Intent(MainActivity.this, PostActivity.class);
-           startActivity(startIntent);
-
-        }
-    });
+        //OPEN AND CLOSE MENU
+        mthreedots.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DrawerLayout navDrawer = findViewById(R.id.drawer_layout);
+                // If the navigation drawer is not open then open it, if its already open then close it.
+                if (!navDrawer.isDrawerOpen(Gravity.END)) navDrawer.openDrawer(Gravity.END);
+                else navDrawer.closeDrawer(Gravity.START);
+            }
+        });
 
 }
 
@@ -230,13 +227,13 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         //On RecyclerView Item Click
         @Override
         public void onItemClick ( int position){
-           // Posts selectedItem = mUploads.get(position);
+            Posts selectedItem = mUploads.get(position);
            // final String uid = selectedItem.getUserID();
-           // String buildingId = selectedItem.getKey();
-           // Intent mainIntent = new Intent(MainActivity.this, ProfileActivity2.class);
-           // mainIntent.putExtra("b_id", buildingId);
-           // mainIntent.putExtra("b_userId", uid);
-           // startActivity(mainIntent);
+            String postId = selectedItem.getKey();
+            Intent mainIntent = new Intent(MainActivity.this, PostActivity.class);
+            mainIntent.putExtra("p_id", postId);
+          //  mainIntent.putExtra("b_userId", uid);
+            startActivity(mainIntent);
         }
 
         //Stop listening when activity has ended.

@@ -8,13 +8,10 @@
             android:id="@+id/nav_profile"
             android:title="My profile"
             />
-        <item
-            android:id="@+id/nav_map"
-            android:title="View all buildings on Map"
-            />
+
         <item
             android:id="@+id/nav_add"
-            android:title="Add a building"
+            android:title="Add a post"
 
             />
 
