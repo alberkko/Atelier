@@ -15,7 +15,6 @@ public class Comments {
         this.comment = comment;
     }
 
-
     public String getComment() {
         return comment;
     }

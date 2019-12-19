@@ -43,6 +43,8 @@ public class PostActivity extends AppCompatActivity {
     private ImageView mPostImage;
     private TextView mUsername;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

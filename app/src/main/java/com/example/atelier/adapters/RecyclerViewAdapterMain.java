@@ -43,7 +43,6 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
     public void onBindViewHolder(RecyclerViewAdapterMain.ImageViewHolderMain holder, int position) {
         Posts uploadCurrent = mUploads.get(position);
         holder.textViewName.setText(uploadCurrent.getDescription());
-
         Picasso.get().load(mUploads.get(position).getImage_url()).fit().centerCrop().into(holder.imageView);
 
         final String postId = uploadCurrent.getKey();
