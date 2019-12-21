@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             }
         });
 
-}
+    }
 
 
 //Profile on Menu Slider
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 //        }
 //    }
 
-        //Add Building - on Menu Slider
+    //Add Building - on Menu Slider
 //    public void add(MenuItem item) {
 //        if (mCurrentUser != null) {
 //            new AlertDialog.Builder(MainActivity.this)
@@ -212,31 +212,31 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 //            Toast.makeText(MainActivity.this, "You have to be Signed In to upload", Toast.LENGTH_SHORT).show();
 //    }
 
-        //Map - on Menu Slide
+    //Map - on Menu Slide
 //    public void map(MenuItem item) {
 //        openMapActivity();
 //    }
 
-        //Criteria - on Menu Slide
+    //Criteria - on Menu Slide
 //    public void criteria(MenuItem item) {
 //        Intent startIntent = new Intent(MainActivity.this, CriteriaActivity.class);
 //        startActivity(startIntent);
 //    }
 
 
-        //On RecyclerView Item Click
-        @Override
-        public void onItemClick ( int position){
-            Posts selectedItem = mUploads.get(position);
-           // final String uid = selectedItem.getUserID();
-            String postId = selectedItem.getKey();
-            Intent mainIntent = new Intent(MainActivity.this, PostActivity.class);
-            mainIntent.putExtra("p_id", postId);
-          //  mainIntent.putExtra("b_userId", uid);
-            startActivity(mainIntent);
-        }
+    //On RecyclerView Item Click
+    @Override
+    public void onItemClick ( int position){
+        Posts selectedItem = mUploads.get(position);
+        // final String uid = selectedItem.getUserID();
+        String postId = selectedItem.getKey();
+        Intent mainIntent = new Intent(MainActivity.this, PostActivity.class);
+        mainIntent.putExtra("p_id", postId);
+        //  mainIntent.putExtra("b_userId", uid);
+        startActivity(mainIntent);
+    }
 
-        //Stop listening when activity has ended.
+    //Stop listening when activity has ended.
 //    @Override
 //    protected void onDestroy() {
 //        super.onDestroy();
@@ -262,4 +262,3 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 //        finish();
 //    }
 }
-
