@@ -75,9 +75,8 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
 
-
         String CurrentUserId = mAuth.getCurrentUser().getUid();
-        mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("Favorites");
+        mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("Posts");
         mQueryCurrentUser = mDatabaseCurrentUser.orderByChild("user_id").equalTo(CurrentUserId);
 
         mDBListener = mQueryCurrentUser.addValueEventListener(new ValueEventListener() {

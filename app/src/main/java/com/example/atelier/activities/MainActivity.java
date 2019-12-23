@@ -224,7 +224,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 //        startActivity(intent);
 //
 //    }
-//
+
     private void sendToStart() {
         Intent startIntent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(startIntent);
