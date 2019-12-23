@@ -66,7 +66,7 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mUploads = new ArrayList<>();
         mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Favorites");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Posts");
         mAdapter = new RecyclerViewAdapter(UserProfileActivity.this, mUploads);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(UserProfileActivity.this);
@@ -100,7 +100,6 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Toast.makeText(UserProfileActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
-
             }
         });
 
@@ -163,6 +162,7 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
     public void onItemClick(int position) {
         Favorites selectedItem = mUploads.get(position);
         String postId = selectedItem.getKey();
+        Toast.makeText(UserProfileActivity.this, "::"+postId, Toast.LENGTH_SHORT).show();
         Intent mainIntent = new Intent(UserProfileActivity.this, PostActivity.class);
         mainIntent.putExtra("p_id", postId);
         startActivity(mainIntent);
