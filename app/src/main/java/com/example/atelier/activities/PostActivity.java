@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,6 +17,8 @@ import com.example.atelier.R;
 import com.example.atelier.adapters.RecyclerViewAdapterComment;
 import com.example.atelier.models.Comments;
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -42,8 +45,11 @@ public class PostActivity extends AppCompatActivity {
     private TextView mPostDescription;
     private ImageView mPostImage;
     private TextView mUsername;
-
-
+    private FirebaseAuth mAuth;
+    private FirebaseUser mCurrentUser;
+    private DatabaseReference mDatabaseUser;
+    private String p_id;
+    private String Comment_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,13 +60,13 @@ public class PostActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
         getWindow().getDecorView().setBackgroundColor(Color.WHITE);
 
-        //get from MainActivity
-       // String b_userId = getIntent().getExtras().get("b_userId").toString();
-        String p_id = getIntent().getExtras().get("p_id").toString();
+        p_id = getIntent().getExtras().get("p_id").toString();
 
+        mAuth = FirebaseAuth.getInstance();
+        mCurrentUser = mAuth.getCurrentUser();
+        mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
         mButtonSend = findViewById(R.id.button_send);
         mEditTextFileName = findViewById(R.id.comment_field);
-
         mRecyclerView = findViewById(R.id.recycler_view_too);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mcUploads = new ArrayList<>();
@@ -68,11 +74,9 @@ public class PostActivity extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Comments");
         mAdapter = new RecyclerViewAdapterComment(PostActivity.this, mcUploads);
         mRecyclerView.setAdapter(mAdapter);
-
         mPostDescription = findViewById(R.id.post_desc);
         mPostImage = findViewById(R.id.thumbnail);
         mUsername = findViewById(R.id.username_aa2);
-
         mUsername.setText("Tier");
 
         //get comments from DB
@@ -96,7 +100,7 @@ public class PostActivity extends AppCompatActivity {
         });
 
 
-        //GET POST IMAGE, DESCRIPTION AND USER FROM DATABASE
+        //GET POST IMAGE, DESCRIPTION FROM DATABASE
         DatabaseReference mainRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference buildingRef = mainRef.child("Posts").child(p_id);
         buildingRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -106,9 +110,12 @@ public class PostActivity extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     String building_description = dataSnapshot.child("description").getValue(String.class);
                     String building_img = dataSnapshot.child("image_url").getValue(String.class);
-
+                  //  Toast.makeText(PostActivity.this, "post:::" + building_img, Toast.LENGTH_SHORT).show();
                     mPostDescription.setText(building_description);
                     Picasso.get().load(building_img).into(mPostImage);
+
+                    Log.e("rcc","::userid::"+building_description);
+                    Log.e("rcc","::userid::"+building_img);
                 }
 
             }
@@ -118,8 +125,6 @@ public class PostActivity extends AppCompatActivity {
 
             }
         });
-
-
 
 
         mButtonSend.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +137,34 @@ public class PostActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        //show comments
+        mDBListener = mDatabaseRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                mcUploads.clear();
+
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    Comments upload = postSnapshot.getValue(Comments.class);
+                    upload.setKey(postSnapshot.getKey());
+
+                    Comment_id = upload.getC_PostID();
+
+                    if (Comment_id.equals(p_id)) {
+                        mcUploads.add(upload);
+                    } else {
+                    }
+                }
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(PostActivity.this, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 
@@ -140,18 +173,13 @@ public class PostActivity extends AppCompatActivity {
         if (sUsername.matches("") ) {
             Toast.makeText(this, "Type something", Toast.LENGTH_LONG).show();
         } else {
-
                     mcUploads.clear();
                     Comments upload;
                     //call the constructor from the Posts class in "models" package
-                    upload = new Comments(mEditTextFileName.getText().toString().trim());
+                    upload = new Comments(mEditTextFileName.getText().toString().trim(), mAuth.getUid(),p_id);
                     String uploadId = mDatabaseRef.push().getKey();
                     mDatabaseRef.child(uploadId).setValue(upload);
                     mEditTextFileName.setText("");
-
-
         }
-            }
-
-
+    }
 }

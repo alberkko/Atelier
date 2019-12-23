@@ -55,9 +55,9 @@ public class AdminUploadActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         FirebaseApp.initializeApp(this);
 
-        //  mAuth = FirebaseAuth.getInstance();
-        //   mCurrentUser = mAuth.getCurrentUser();
-        //  mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        mAuth = FirebaseAuth.getInstance();
+        mCurrentUser = mAuth.getCurrentUser();
+        mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
         mStorageRef = FirebaseStorage.getInstance().getReference("Posts");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Posts");
         mButtonUpload = findViewById(R.id.upload_btn);
@@ -139,7 +139,7 @@ public class AdminUploadActivity extends AppCompatActivity {
                     Posts upload;
 
                     //can the constructor from the Posts class in "models" package
-                    upload = new Posts(downloadUrl.toString(),mEditTextFileName.getText().toString().trim());
+                    upload = new Posts(downloadUrl.toString(), mEditTextFileName.getText().toString().trim(), mAuth.getUid());
 
                     String uploadId = mDatabaseRef.push().getKey();
                     mDatabaseRef.child(uploadId).setValue(upload);

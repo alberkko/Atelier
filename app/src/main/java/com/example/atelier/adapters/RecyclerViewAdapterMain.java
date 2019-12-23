@@ -8,15 +8,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.atelier.R;
-import com.example.atelier.activities.AdminUploadActivity;
 import com.example.atelier.activities.PostActivity;
+import com.example.atelier.models.Favorites;
 import com.example.atelier.models.Posts;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
     }
 
     @Override
-    public void onBindViewHolder(RecyclerViewAdapterMain.ImageViewHolderMain holder, int position) {
+    public void onBindViewHolder(final RecyclerViewAdapterMain.ImageViewHolderMain holder, final int position) {
         Posts uploadCurrent = mUploads.get(position);
         holder.textViewName.setText(uploadCurrent.getDescription());
         Picasso.get().load(mUploads.get(position).getImage_url()).fit().centerCrop().into(holder.imageView);
@@ -58,11 +59,11 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         holder.bookmarkbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
+                Favorites upload;
+                upload = new Favorites(mUploads.get(position).getImage_url(), holder.mCurrentUser.getUid() );
+                String uploadId = holder.mDatabaseRef.push().getKey();
+                holder.mDatabaseRef.child(uploadId).setValue(upload);
 
-                //DO NOTHING FOR NOW
-
-//                Intent intent = new Intent(v.getContext(), AdminUploadActivity.class);
-//                mContext.startActivity(intent);
             }
         });
     }
@@ -77,6 +78,10 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         public TextView textViewName;
         public ImageView imageView;
         LinearLayout view_container;
+        public FirebaseAuth mAuth;
+        public FirebaseUser mCurrentUser;
+        public DatabaseReference mDatabaseUser;
+        public DatabaseReference mDatabaseRef;
 
         public TextView commentbtn;
         public TextView bookmarkbtn;
@@ -84,11 +89,15 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         public ImageViewHolderMain(@NonNull View itemView) {
             super(itemView);
 
+            mAuth = FirebaseAuth.getInstance();
+            mCurrentUser = mAuth.getCurrentUser();
+            mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
             commentbtn = itemView.findViewById(R.id.comment_icon);
             bookmarkbtn = itemView.findViewById(R.id.bookmark_icon);
             textViewName = itemView.findViewById(R.id.post_description);
             imageView = itemView.findViewById(R.id.thumbnail);
             view_container = itemView.findViewById(R.id.container);
+            mDatabaseRef = FirebaseDatabase.getInstance().getReference("Favorites");
             itemView.setOnClickListener(this);
         }
 

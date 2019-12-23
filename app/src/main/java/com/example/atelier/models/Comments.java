@@ -5,22 +5,29 @@ import com.google.firebase.database.Exclude;
 public class Comments {
 
     private String comment;
-    private String profile_p_url;
     private String mKey;
+    private String c_userID;
+    private String c_postID;
 
     public Comments() {
     }
 
-    public Comments(String comment) {
+    public Comments(String comment, String c_userID, String c_postID) {
         this.comment = comment;
+        this.c_userID = c_userID;
+        this.c_postID = c_postID;
     }
 
     public String getComment() {
         return comment;
     }
 
-    public String getProfile_p_url() {
-        return profile_p_url;
+    public String getC_UserID() {
+        return c_userID;
+    }
+
+    public String getC_PostID() {
+        return c_postID;
     }
 
 
@@ -28,9 +35,14 @@ public class Comments {
         this.comment = comment;
     }
 
-    public void setProfile_p_url(String profile_p_url) {
-        this.profile_p_url = profile_p_url;
+    public void setC_PostID(String c_postID) {
+        this.c_postID = c_postID;
     }
+
+    public void setC_UserID(String c_userID) {
+        this.c_userID = c_userID;
+    }
+
 
 
     @Exclude

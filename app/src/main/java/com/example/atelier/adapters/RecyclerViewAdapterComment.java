@@ -13,6 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.atelier.R;
 import com.example.atelier.models.Comments;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -34,15 +39,52 @@ public class RecyclerViewAdapterComment extends RecyclerView.Adapter<RecyclerVie
     }
 
     @Override
-    public void onBindViewHolder(ImageViewHolderComment holder, int position) {
+    public void onBindViewHolder(final ImageViewHolderComment holder, int position) {
         Comments uploadCurrent = mcUploads.get(position);
         holder.commentText.setText(uploadCurrent.getComment());
-        Picasso.get().load(uploadCurrent.getProfile_p_url()).fit().centerCrop().into(holder.commentPhoto);
+//        holder.commentName.setText(uploadCurrent.getC_UserID());
+//
+//        get image from profile of user
+//        Picasso.get().load(uploadCurrent.getProfile_p_url()).fit().centerCrop().into(holder.commentPhoto);
 
-        Log.e("rcc","::"+mcUploads.get(position));
-        Log.e("rcc","::"+uploadCurrent.getComment());
-        Log.e("rcc","::"+uploadCurrent.getProfile_p_url());
+        Log.e("rcc","::position::"+mcUploads.get(position));
+        Log.e("rcc","::comment::"+uploadCurrent.getComment());
+     //   Log.e("rcc","::profile photo::"+uploadCurrent.getProfile_p_url());
+        Log.e("rcc","::userid::"+uploadCurrent.getC_UserID());
 
+
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference name = ref.child("Users").child(uploadCurrent.getC_UserID()).child("name");
+        name.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String username = dataSnapshot.getValue(String.class);
+                holder.commentName.setText(username);
+
+                Log.e("rcc","::userid::"+username);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+//        DatabaseReference profile_photo = ref.child("Users").child(uploadCurrent.getC_UserID()).child("PROFILEPHOTO");
+//        name.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String username = dataSnapshot.getValue(String.class);
+//                holder.commentName.setText(username);
+//
+//                Log.e("rcc","::userid::"+username);
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -54,12 +96,14 @@ public class RecyclerViewAdapterComment extends RecyclerView.Adapter<RecyclerVie
 
         public TextView commentText;
         public ImageView commentPhoto;
+        public TextView commentName;
 
         public ImageViewHolderComment(@NonNull View itemView) {
             super(itemView);
 
             commentText = itemView.findViewById(R.id.comment_content);
             commentPhoto = itemView.findViewById(R.id.comment_photo);
+            commentName = itemView.findViewById(R.id.comment_username);
 
         }
 
