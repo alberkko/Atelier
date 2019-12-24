@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.atelier.R;
 import com.example.atelier.adapters.RecyclerViewAdapterMain;
+import com.example.atelier.models.Comments;
 import com.example.atelier.models.Posts;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -209,8 +210,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 //        super.onDestroy();
 //        mDatabaseRef.removeEventListener(mDBListener);
 //    }
-//
-//
 
     private void openUploadActivity() {
         Intent intent = new Intent(this, AdminUploadActivity.class);

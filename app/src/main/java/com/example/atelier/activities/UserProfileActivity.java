@@ -2,6 +2,7 @@ package com.example.atelier.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.atelier.R;
 import com.example.atelier.adapters.RecyclerViewAdapter;
 import com.example.atelier.models.Favorites;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -24,7 +24,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,7 +65,7 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
         mRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         mUploads = new ArrayList<>();
         mStorage = FirebaseStorage.getInstance();
-        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Posts");
+        mDatabaseRef = FirebaseDatabase.getInstance().getReference("Favorites");
         mAdapter = new RecyclerViewAdapter(UserProfileActivity.this, mUploads);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.setOnItemClickListener(UserProfileActivity.this);
@@ -76,8 +75,11 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
         mCurrentUser = mAuth.getCurrentUser();
 
         String CurrentUserId = mAuth.getCurrentUser().getUid();
-        mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("Posts");
+        mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("Favorites");
         mQueryCurrentUser = mDatabaseCurrentUser.orderByChild("user_id").equalTo(CurrentUserId);
+
+        Log.e("work2","here:db:"+mDatabaseCurrentUser);
+        Log.e("work2","here:qq:"+mQueryCurrentUser);
 
         mDBListener = mQueryCurrentUser.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,6 +94,9 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
                     num = mUploads.size();
                     String numm = String.valueOf(num);
                     mBCount.setText(numm);
+
+                    Log.e("work2","here:qqMCMCMC:"+mUploads);
+                    Log.e("work","now here here::"+numm);
                 }
                 mAdapter.notifyDataSetChanged();
             }
@@ -160,7 +165,7 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
     @Override
     public void onItemClick(int position) {
         Favorites selectedItem = mUploads.get(position);
-        String postId = selectedItem.getKey();
+        String postId = selectedItem.getmPost_id();
         Toast.makeText(UserProfileActivity.this, "::"+postId, Toast.LENGTH_SHORT).show();
         Intent mainIntent = new Intent(UserProfileActivity.this, PostActivity.class);
         mainIntent.putExtra("p_id", postId);
@@ -169,17 +174,13 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
 
     @Override
     public void onDeleteClick(int position) {
+
+        //DELETE ONLY DELETES IMAGES FROM STORAGE
         Favorites selectedItem = mUploads.get(position);
         final String selectedKey = selectedItem.getKey();
 
-        StorageReference imageRef = mStorage.getReferenceFromUrl(selectedItem.getImage_url2());
-        imageRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                mDatabaseRef.child(selectedKey).removeValue();
-                Toast.makeText(UserProfileActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
-            }
-        });
+        mDatabaseRef.child(selectedKey).removeValue();
+        Toast.makeText(UserProfileActivity.this, "Item deleted", Toast.LENGTH_SHORT).show();
     }
 
     @Override
