@@ -1,5 +1,8 @@
 package com.example.atelier.models;
 import com.google.firebase.database.Exclude;
+import com.google.firebase.database.ServerValue;
+
+import java.util.HashMap;
 
 public class Posts {
 
@@ -7,6 +10,8 @@ public class Posts {
     private String image_url;
     private String mKey;
     private String userID;
+    private HashMap<String, Object> timestampCreated;
+
 
     public Posts() {
     }
@@ -17,9 +22,15 @@ public class Posts {
             description = "";
         }
 
+
         this.image_url = image_url;
         this.description = description;
         this.userID = userID;
+
+        HashMap<String, Object> timestampNow = new HashMap<>();
+        timestampNow.put("timestamp", ServerValue.TIMESTAMP);
+        this.timestampCreated = timestampNow;
+
     }
 
     public String getDescription() {
@@ -32,6 +43,10 @@ public class Posts {
 
     public String getUserID() {
         return userID;
+    }
+
+    public HashMap<String, Object> getTimestampCreated(){
+        return timestampCreated;
     }
 
 
@@ -54,6 +69,11 @@ public class Posts {
     @Exclude
     public void setKey(String key) {
         mKey = key;
+    }
+
+    @Exclude
+    public long getTimestampCreatedLong(){
+        return (long)timestampCreated.get("timestamp");
     }
 
 }

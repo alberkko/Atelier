@@ -31,6 +31,8 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+
 public class AdminUploadActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -140,6 +142,7 @@ public class AdminUploadActivity extends AppCompatActivity {
 
                     //can the constructor from the Posts class in "models" package
                     upload = new Posts(downloadUrl.toString(), mEditTextFileName.getText().toString().trim(), mAuth.getUid());
+
 
                     String uploadId = mDatabaseRef.push().getKey();
                     mDatabaseRef.child(uploadId).setValue(upload);

@@ -66,9 +66,28 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         Log.e("work","here:Query:"+holder.mCommentRef);
         Log.e("work","here:Query:"+holder.mQueryCommentRef);
 
+//        holder.mDBListener2 = holder.mDatabaseRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                String email = dataSnapshot.getValue(String.class);
+//                Log.e("time","::"+email);
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
+
+
         holder.mDBListener = holder.mQueryCommentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                holder.mcUploads.clear();
+
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Comments c_upload = postSnapshot.getValue(Comments.class);
                     c_upload.setKey(postSnapshot.getKey());
@@ -126,6 +145,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
         public TextView textViewName;
         public TextView c_counter;
+        public TextView t_counter;
         public ImageView imageView;
         LinearLayout view_container;
         public FirebaseAuth mAuth;
@@ -133,8 +153,13 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         public DatabaseReference mDatabaseUser;
         public DatabaseReference mDatabaseRef;
         public DatabaseReference mDatabaseRef2;
+        public DatabaseReference mDatabaseRef3;
+
+        public DatabaseReference ref;
+        public DatabaseReference mostafa;
 
         public ValueEventListener mDBListener;
+        public ValueEventListener mDBListener2;
 
         public DatabaseReference mCommentRef;
         public Query mQueryCommentRef;
@@ -157,8 +182,15 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             imageView = itemView.findViewById(R.id.thumbnail);
             view_container = itemView.findViewById(R.id.container);
             mDatabaseRef = FirebaseDatabase.getInstance().getReference("Favorites");
+            mDatabaseRef3 = FirebaseDatabase.getInstance().getReference("Posts").child("timestampCreated").child("timestamp");
             c_counter = itemView.findViewById(R.id.textView4);
+            t_counter = itemView.findViewById(R.id.textView3);
             mcUploads = new ArrayList<>();
+
+            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+            DatabaseReference mostafa = ref.child("Posts").child("timestampCreated").child("timestamp");
+
+
 
             mCommentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
 

@@ -28,6 +28,7 @@
         <activity android:name=".models.Posts" />
         <activity android:name=".activities.MainActivity">
 
+
         </activity>
 
         <meta-data

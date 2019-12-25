@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.atelier.R;
 import com.example.atelier.adapters.RecyclerViewAdapter;
+import com.example.atelier.models.Comments;
 import com.example.atelier.models.Favorites;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -81,6 +82,7 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
         Log.e("work2","here:db:"+mDatabaseCurrentUser);
         Log.e("work2","here:qq:"+mQueryCurrentUser);
 
+        //DISPLAY NUMBER OF FAVORITED POSTS ON PROFILE
         mDBListener = mQueryCurrentUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -96,9 +98,11 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
                     mBCount.setText(numm);
 
                     Log.e("work2","here:qqMCMCMC:"+mUploads);
-                    Log.e("work","now here here::"+numm);
+                    Log.e("whatisthisfor","now here here::"+numm);
                 }
+
                 mAdapter.notifyDataSetChanged();
+
             }
 
             @Override
