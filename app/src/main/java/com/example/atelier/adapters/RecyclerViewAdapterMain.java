@@ -162,7 +162,6 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
             mCommentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
 
-
             itemView.setOnClickListener(this);
         }
 
