@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.atelier.R;
+import com.example.atelier.activities.LoginActivity;
 import com.example.atelier.activities.PostActivity;
 import com.example.atelier.activities.UserProfileActivity;
 import com.example.atelier.models.Comments;
@@ -105,13 +106,21 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             @Override
             public void onClick(View v ) {
 
-                 Favorites upload;
-                 upload = new Favorites(mUploads.get(position).getImage_url(), holder.mCurrentUser.getUid(),mUploads.get(position).getKey());
-                 String uploadId = holder.mDatabaseRef.push().getKey();
-                 holder.mDatabaseRef.child(uploadId).setValue(upload);
+                if(holder.mCurrentUser != null) {
+                    Favorites upload;
+                    upload = new Favorites(mUploads.get(position).getImage_url(), holder.mCurrentUser.getUid(), mUploads.get(position).getKey());
+                    String uploadId = holder.mDatabaseRef.push().getKey();
+                    holder.mDatabaseRef.child(uploadId).setValue(upload);
 
-                 //change bookmark icon so it looks like it can't be clicked anymore.
-                holder.bookmarkbtn.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_bookmark_transp, 0, 0, 0);
+                    //change bookmark icon so it looks like it can't be clicked anymore.
+                    holder.bookmarkbtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_bookmark_transp, 0, 0, 0);
+                }
+                else{
+                    Toast.makeText(mContext,"you are not loggeeeeeed in",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    mContext.startActivity(intent);
+
+                }
 
             }
         });
@@ -130,7 +139,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         LinearLayout view_container;
         public FirebaseAuth mAuth;
         public FirebaseUser mCurrentUser;
-        public DatabaseReference mDatabaseUser;
+    //    public DatabaseReference mDatabaseUser;
         public DatabaseReference mDatabaseRef;
         public DatabaseReference mDatabaseRef2;
 
@@ -150,7 +159,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
             mAuth = FirebaseAuth.getInstance();
             mCurrentUser = mAuth.getCurrentUser();
-            mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+         //   mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
             commentbtn = itemView.findViewById(R.id.comment_icon);
             bookmarkbtn = itemView.findViewById(R.id.bookmark_icon);
             textViewName = itemView.findViewById(R.id.post_description);
@@ -161,6 +170,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             mcUploads = new ArrayList<>();
 
             mCommentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
+
 
             itemView.setOnClickListener(this);
         }
