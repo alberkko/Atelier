@@ -2,6 +2,7 @@ package com.example.atelier.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.atelier.R;
 import com.example.atelier.activities.LoginActivity;
 import com.example.atelier.activities.PostActivity;
-import com.example.atelier.activities.UserProfileActivity;
 import com.example.atelier.models.Comments;
 import com.example.atelier.models.Favorites;
 import com.example.atelier.models.Posts;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,10 +30,19 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
+import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
+
+import static java.text.DateFormat.getDateTimeInstance;
 
 
 public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAdapterMain.ImageViewHolderMain> {
@@ -63,23 +74,89 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         holder.mDatabaseRef2 = holder.mDatabaseRef.child(postId);
         holder.mQueryCommentRef = holder.mCommentRef.orderByChild("c_PostID").equalTo(postId);
 
-        Log.e("work","here:POSTIDIDIDIDID:"+postId);
-        Log.e("work","here:Query:"+holder.mCommentRef);
-        Log.e("work","here:Query:"+holder.mQueryCommentRef);
 
-//        holder.mDBListener2 = holder.mDatabaseRef3.addListenerForSingleValueEvent(new ValueEventListener() {
+
+//        Log.e("work", "here:POSTIDIDIDIDID:" + postId);
+//        Log.e("work", "here:Query:" + holder.mCommentRef);
+//        Log.e("work", "here:Query:" + holder.mQueryCommentRef);
+
+
+
+//        holder.mDatabaseRef3.addValueEventListener(new ValueEventListener() {
 //            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                String email = dataSnapshot.getValue(String.class);
-//                Log.e("time","::"+email);
+//            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+
+//                    Posts ap = postSnapshot.getValue(Posts.class);
+//                    String pathstatus = ap.getPath();
+//                    final String idk = ap.getDescription();
+//                    final String key = ap.getKey();
+
+                //    holder.mDatabaseRef3.child("timestamp").push().setValue(pathstatus);
+
+//                    Log.e("ppd","::"+idk);
+
+                   // String pp = (String) postSnapshot.child("path").getValue();
+                  //  Log.e("www",":: " + holder.storageRef);
+                  //  holder.storageRef = FirebaseStorage.getInstance().getReference().child("Posts").child(pathstatus);
+//                    holder.storageRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+//                        @Override
+//                        public void onSuccess(StorageMetadata storageMetadata) {
 //
+//                            Calendar calendar = Calendar.getInstance();
+//                            calendar.setTimeInMillis(storageMetadata.getCreationTimeMillis());
+//
+//                            int mYear = calendar.get(Calendar.YEAR);
+//                            int mMonth = calendar.get(Calendar.MONTH);
+//                            int cMonth = mMonth+1;
+//                            int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+//                            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+//                            int min = calendar.get(Calendar.MINUTE);
+//
+//                           // Log.e("metadata",""+calendar.get(Calendar.DAY_OF_MONTH)+"/"+calendar.get(Calendar.MONTH+1)+"/"+calendar.get(Calendar.YEAR)+" :: "+calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE));
+//
+//                            Log.e("ppd","::"+hour+":"+min+"  "+mDay+"/"+cMonth+"::"+idk);
+//
+//                            holder.mDatabaseRef3.child(key).push().setValue(holder.storageRef);
+//
+//                            holder.t_counter.setText(hour+":"+min+"  "+mDay+"/"+cMonth);
+//                        }
+//
+//                    }).addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception exception) {
+//                            // Uh-oh, an error occurred!
+//                        }
+////                    });
+//                }
 //            }
-//
+
 //            @Override
 //            public void onCancelled(@NonNull DatabaseError databaseError) {
 //
 //            }
 //        });
+
+
+
+        holder.mDBListener2 = holder.mQueryTimeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot psn : dataSnapshot.getChildren()){
+                    Posts t_upload = psn.getValue(Posts.class);
+
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
 
@@ -95,9 +172,6 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
                     holder.mcUploads.add(c_upload);
                     holder.num = holder.mcUploads.size();
                     String numm = String.valueOf(holder.num);
-
-                    Log.e("work","::inside::MCUPLOADS::"+holder.mcUploads);
-                    Log.e("work","now here here::"+holder.num);
 
                     holder.c_counter.setText(numm+" Comments");
 
@@ -163,6 +237,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         public DatabaseReference mDatabaseRef;
         public DatabaseReference mDatabaseRef2;
         public DatabaseReference mDatabaseRef3;
+        public StorageReference storageRef;
 
         public DatabaseReference ref;
         public DatabaseReference mostafa;
@@ -172,8 +247,10 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
         public DatabaseReference mCommentRef;
         public Query mQueryCommentRef;
+        public Query mQueryTimeRef;
 
         public List<Comments> mcUploads;
+        public List<Posts> mpUploads;
 
         public int num;
         public TextView commentbtn;
@@ -191,20 +268,22 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             imageView = itemView.findViewById(R.id.thumbnail);
             view_container = itemView.findViewById(R.id.container);
             mDatabaseRef = FirebaseDatabase.getInstance().getReference("Favorites");
-            mDatabaseRef3 = FirebaseDatabase.getInstance().getReference("Posts").child("timestampCreated").child("timestamp");
+            mDatabaseRef3 = FirebaseDatabase.getInstance().getReference("Posts");
             c_counter = itemView.findViewById(R.id.textView4);
             t_counter = itemView.findViewById(R.id.textView3);
             mcUploads = new ArrayList<>();
+            mpUploads = new ArrayList<>();
+
+          //  StorageReference forestRef = storageRef.child("Posts");
+
 
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-            DatabaseReference mostafa = ref.child("Posts").child("timestampCreated").child("timestamp");
-
-
 
             mCommentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
 
 
             itemView.setOnClickListener(this);
+
         }
 
         @Override
