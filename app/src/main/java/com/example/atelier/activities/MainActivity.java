@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private Spinner spinner;
     private String choic;
     private Query mDbQuerry;
+    private LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +74,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         mDrawerLayout.addDrawerListener(mToggle);
         mToggle.syncState();
         mRecyclerView = findViewById(R.id.recycler_view);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        linearLayoutManager = new LinearLayoutManager(MainActivity.this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
         mUploads = new ArrayList<>();
         mStorage = FirebaseStorage.getInstance();
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Posts");

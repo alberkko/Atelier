@@ -138,25 +138,25 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 //        });
 
 
-
-        holder.mDBListener2 = holder.mQueryTimeRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot psn : dataSnapshot.getChildren()){
-                    Posts t_upload = psn.getValue(Posts.class);
-
-
-
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+//
+//        holder.mDBListener2 = holder.mQueryTimeRef.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                for (DataSnapshot psn : dataSnapshot.getChildren()){
+//                    Posts t_upload = psn.getValue(Posts.class);
+//
+//
+//
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
 
 
 

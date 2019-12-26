@@ -71,8 +71,7 @@ public class AdminUploadActivity extends AppCompatActivity {
         mButtonUpload = findViewById(R.id.upload_btn);
         mEditTextFileName = findViewById(R.id.name_editText2);
         mImageView = findViewById(R.id.imageView);
-        spinner = findViewById(R.id.spinnerUpload);
-
+        spinner = findViewById(R.id.spinerUpload_1);
 
         List<String> category = new ArrayList<>();
         category.add("Criteria of categorization");
@@ -119,6 +118,7 @@ public class AdminUploadActivity extends AppCompatActivity {
                     uploadFile();
                     openImagesActivity();
                     finish();
+                    mButtonUpload.setText("Uploading");
                 }
             }
         });

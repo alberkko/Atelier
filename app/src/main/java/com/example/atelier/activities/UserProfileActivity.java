@@ -160,7 +160,7 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
         mImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // startActivity(new Intent(getApplicationContext(), EditUserProfileActivity.class));
+                startActivity(new Intent(getApplicationContext(), EditUserProfileActivity.class));
             }
         });
     }

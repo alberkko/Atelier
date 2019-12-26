@@ -18,64 +18,53 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="708dp">
 
                 <EditText
-                    android:id="@+id/name_editText2"
-                    android:layout_width="0dp"
-                    android:layout_height="37dp"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="52dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
+                    android:id="@+id/name_editText2_00"
+                    android:layout_width="378dp"
+                    android:layout_height="57dp"
+                    android:layout_marginTop="20dp"
                     android:hint="Write a caption..."
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                    app:layout_constraintTop_toBottomOf="@+id/imageView_00" />
 
                 <ImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/imageView_00"
                     android:layout_width="300dp"
                     android:layout_height="300dp"
                     android:layout_marginStart="52dp"
                     android:layout_marginLeft="52dp"
-                    android:layout_marginTop="48dp"
+                    android:layout_marginTop="108dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.05"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/upload_btn"
+                    android:id="@+id/upload_btn_00"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="100dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="64dp"
                     android:text="Upload"
                     android:textSize="36sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/name_editText2" />
+                    app:layout_constraintTop_toBottomOf="@+id/spinnerUpload_00"
+                    app:layout_constraintVertical_bias="0.881" />
 
                 <Spinner
-                    android:id="@+id/spinerUpload_1"
+                    android:id="@+id/spinnerUpload_00"
                     android:layout_width="196dp"
                     android:layout_height="30dp"
-                    android:layout_marginStart="107dp"
-                    android:layout_marginLeft="107dp"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginEnd="108dp"
-                    android:layout_marginRight="108dp"
-                    android:layout_marginBottom="50dp"
-                    app:layout_constraintBottom_toTopOf="@+id/upload_btn"
+                    android:layout_marginTop="36dp"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.497"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/name_editText2"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintTop_toBottomOf="@+id/name_editText2_00" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
