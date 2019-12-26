@@ -25,6 +25,7 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
     EditText email, password;
     Button loginBtn;
+    Button backBtn;
     TextView signupTextView;
     FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListenter;
@@ -39,6 +40,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.passwordText);
         loginBtn = findViewById(R.id.login_button);
         signupTextView = findViewById(R.id.signupTextView);
+        backBtn = findViewById(R.id.back_button);
 
         mAuthStateListenter = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -50,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(i);
                 }
                 else {
-                    Toast.makeText(LoginActivity.this,"Some Login Error",Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(LoginActivity.this,"Some Login Error",Toast.LENGTH_SHORT).show();
                 }
             }
         };
@@ -99,7 +101,17 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intSignup);
             }
         });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intBack = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intBack);
+            }
+        });
     }
+
+
 
     @Override
     protected void onStart() {

@@ -18,12 +18,12 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="500dp">
+                android:layout_height="708dp">
 
                 <EditText
                     android:id="@+id/name_editText2"
-                    android:layout_width="0dp"
-                    android:layout_height="37dp"
+                    android:layout_width="378dp"
+                    android:layout_height="57dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="52dp"
@@ -52,14 +52,21 @@
                     android:id="@+id/upload_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginBottom="16dp"
+                    android:layout_marginBottom="64dp"
                     android:text="Upload"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/name_editText2"
-                    app:layout_constraintVertical_bias="0.654" />
+                    app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+                <Spinner
+                    android:id="@+id/spinnerUpload"
+                    android:layout_width="196dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="64dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/name_editText2" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

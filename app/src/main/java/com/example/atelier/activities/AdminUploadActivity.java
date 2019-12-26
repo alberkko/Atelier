@@ -6,8 +6,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +34,9 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class AdminUploadActivity extends AppCompatActivity {
 
@@ -46,7 +51,8 @@ public class AdminUploadActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
     private DatabaseReference mDatabaseUser;
-
+    private Spinner spinner;
+    private String tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,35 @@ public class AdminUploadActivity extends AppCompatActivity {
         mButtonUpload = findViewById(R.id.upload_btn);
         mEditTextFileName = findViewById(R.id.name_editText2);
         mImageView = findViewById(R.id.imageView);
+        spinner = findViewById(R.id.spinnerUpload);
+
+
+        List<String> category = new ArrayList<>();
+        category.add("Criteria of categorization");
+        category.add("News");
+        category.add("Announcements");
+        category.add("Clothing pieces");
+
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, category);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(categoryAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String choice = spinner.getSelectedItem().toString();
+                if(!choice.equals("Criteria of categorization")) {
+                    tag = choice;
+                    Toast.makeText(AdminUploadActivity.this,"u bo kategoria " + choice ,Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         //open file chooser to select an image
         mImageView.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +118,7 @@ public class AdminUploadActivity extends AppCompatActivity {
                 } else {
                     uploadFile();
                     openImagesActivity();
+                    finish();
                 }
             }
         });
@@ -140,8 +176,8 @@ public class AdminUploadActivity extends AppCompatActivity {
 
                     Posts upload;
 
-                    //can the constructor from the Posts class in "models" package
-                    upload = new Posts(downloadUrl.toString(), mEditTextFileName.getText().toString().trim(), mAuth.getUid());
+                   //can the constructor from the Posts class in "models" package
+                    upload = new Posts(downloadUrl.toString(), mEditTextFileName.getText().toString().trim(), mAuth.getUid(), tag);
 
 
                     String uploadId = mDatabaseRef.push().getKey();
