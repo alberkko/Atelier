@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.atelier.R;
+import com.example.atelier.activities.EditPostActivity;
 import com.example.atelier.activities.LoginActivity;
 import com.example.atelier.activities.PostActivity;
 import com.example.atelier.models.Comments;
@@ -189,7 +190,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         holder.commentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v ) {
-                Intent intent = new Intent(v.getContext(), PostActivity.class);
+                Intent intent = new Intent(v.getContext(), EditPostActivity.class);
                 intent.putExtra("p_id", postId);
                 mContext.startActivity(intent);
             }

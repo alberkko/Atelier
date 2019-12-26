@@ -82,8 +82,8 @@ public class EditPostActivity extends AppCompatActivity {
         //remember to get p_id from PostActivity
         p_id = getIntent().getExtras().get("p_id").toString();
 
-        mDatabaseUser_name = FirebaseDatabase.getInstance().getReference().child("Buildings").child(p_id).child("name");
-        mDatabaseUser_img = FirebaseDatabase.getInstance().getReference().child("Buildings").child(p_id).child("image_url");
+        mDatabaseUser_name = FirebaseDatabase.getInstance().getReference().child("Posts").child(p_id).child("description");
+        mDatabaseUser_img = FirebaseDatabase.getInstance().getReference().child("Posts").child(p_id).child("image_url");
 
         //GET ALL TOGETHER
 
