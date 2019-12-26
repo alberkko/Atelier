@@ -10,13 +10,19 @@ public class Posts {
     private String image_url;
     private String mKey;
     private String userID;
-    private HashMap<String, Object> timestampCreated;
+    private String path;
+    private String ts;
+//    private HashMap<String, Object> timestampCreated;
 
 
     public Posts() {
     }
 
-    public Posts(String image_url, String description, String userID) {
+    public Posts(String ts){
+        this.ts = ts;
+    }
+
+    public Posts(String path,String image_url, String description, String userID) {
         //if description field left empty
         if (description.trim().equals("")) {
             description = "";
@@ -26,10 +32,10 @@ public class Posts {
         this.image_url = image_url;
         this.description = description;
         this.userID = userID;
-
-        HashMap<String, Object> timestampNow = new HashMap<>();
-        timestampNow.put("timestamp", ServerValue.TIMESTAMP);
-        this.timestampCreated = timestampNow;
+        this.path = path;
+//        HashMap<String, Object> timestampNow = new HashMap<>();
+//        timestampNow.put("timestamp", ServerValue.TIMESTAMP);
+//        this.timestampCreated = timestampNow;
 
     }
 
@@ -45,9 +51,17 @@ public class Posts {
         return userID;
     }
 
-    public HashMap<String, Object> getTimestampCreated(){
-        return timestampCreated;
+    public String getPath() {
+        return path;
     }
+
+    public String getTs() {
+        return ts;
+    }
+
+//    public HashMap<String, Object> getTimestampCreated(){
+//        return timestampCreated;
+//    }
 
 
     public void setDescription(String description) {
@@ -60,6 +74,15 @@ public class Posts {
         this.userID = userID;
     }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setTs(String ts) {
+        this.ts = ts;
+    }
+
+
 
     @Exclude
     public String getKey() {
@@ -71,9 +94,9 @@ public class Posts {
         mKey = key;
     }
 
-    @Exclude
-    public long getTimestampCreatedLong(){
-        return (long)timestampCreated.get("timestamp");
-    }
+//    @Exclude
+//    public long getTimestampCreatedLong(){
+//        return (long)timestampCreated.get("timestamp");
+//    }
 
 }
