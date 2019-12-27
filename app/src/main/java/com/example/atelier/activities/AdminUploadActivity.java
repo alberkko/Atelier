@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -29,12 +30,15 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -53,6 +57,7 @@ public class AdminUploadActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseUser;
     private Spinner spinner;
     private String tag;
+    private StorageReference mStorageRef2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,8 +165,9 @@ public class AdminUploadActivity extends AppCompatActivity {
         if (mImageUri == null ) {
             Toast.makeText(this, "No image selected", Toast.LENGTH_LONG).show();
         } else {
-            StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
-                    + "." + getFileExtension(mImageUri));
+
+            final String path = "Posts/"+System.currentTimeMillis()+ "." + getFileExtension(mImageUri);
+            StorageReference fileReference = mStorageRef.child(path);
 
             mUploadTask = fileReference.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -176,13 +182,56 @@ public class AdminUploadActivity extends AppCompatActivity {
 
                     Posts upload;
 
-                   //can the constructor from the Posts class in "models" package
-                    upload = new Posts(downloadUrl.toString(), mEditTextFileName.getText().toString().trim(), mAuth.getUid(), tag);
-
-
-                    String uploadId = mDatabaseRef.push().getKey();
+                   //call the constructor from the Posts class in "models" package
+                    upload = new Posts(path,downloadUrl.toString(), mEditTextFileName.getText().toString().trim(), mAuth.getUid(), tag);
+                    final String uploadId = mDatabaseRef.push().getKey();
                     mDatabaseRef.child(uploadId).setValue(upload);
 
+                    mStorageRef2=FirebaseStorage.getInstance().getReference().child("Posts").child(path);
+
+                    mStorageRef2.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+                        @Override
+                        public void onSuccess(StorageMetadata storageMetadata) {
+
+                            Calendar calendar = Calendar.getInstance();
+                            calendar.setTimeInMillis(storageMetadata.getCreationTimeMillis());
+
+                            long mills = storageMetadata.getCreationTimeMillis();
+
+
+                            Log.e("storage time",":: "+storageMetadata.getCreationTimeMillis());
+                            Log.e("current time",":: "+System.currentTimeMillis());
+
+                         //   long hours = mills/(1000 * 60 * 60);
+                         //   long mins = (mills/(1000*60)) % 60;
+                         //   String diff = hours + ":" + mins;
+
+                            int mYear = calendar.get(Calendar.YEAR);
+                            int mMonth = calendar.get(Calendar.MONTH);
+                            int cMonth = mMonth+1;
+                            int mDay = calendar.get(Calendar.DAY_OF_MONTH);
+                            int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                            int min = calendar.get(Calendar.MINUTE);
+
+                            //UPLOAD time
+                            String ts = hour + ":"+min+", "+mDay+"/"+cMonth+"/"+mYear;
+                            mDatabaseRef.child(uploadId).child("ts").setValue(storageMetadata.getCreationTimeMillis());
+
+
+//                            Posts upload2;
+//                            upload2 = new Posts(ts);
+//                            final String uploadId = mDatabaseRef.push().getKey();
+//                            mDatabaseRef.child(uploadId).setValue(upload2);
+
+
+                        }
+
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception exception) {
+                            // Uh-oh, an error occurred!
+                        }
+                    });
 
                 }
             })

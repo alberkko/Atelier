@@ -74,91 +74,40 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
         holder.mDatabaseRef2 = holder.mDatabaseRef.child(postId);
         holder.mQueryCommentRef = holder.mCommentRef.orderByChild("c_PostID").equalTo(postId);
+        holder.mQueryTimeRef = holder.mTimeRef;
+
+        holder.mDBListener2 = holder.mQueryTimeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot psn : dataSnapshot.getChildren()){
+                    Posts t_up =psn.getValue(Posts.class);
+                    long time = t_up.getTs();
 
 
 
-//        Log.e("work", "here:POSTIDIDIDIDID:" + postId);
-//        Log.e("work", "here:Query:" + holder.mCommentRef);
-//        Log.e("work", "here:Query:" + holder.mQueryCommentRef);
+                    long mills = time - System.currentTimeMillis();
+                    long hours = mills/(1000 * 60 * 60);
+                    long mins = (mills/(1000*60)) % 60;
 
+                    if(hours >= 1){
+                        String diff = hours + " hours ago";
+                        holder.t_counter.setText(diff);
+                    }
 
+                    else {
+                        mins = Math.abs(mins);
+                        String diff = mins + " minutes ago";
+                        holder.t_counter.setText(diff);
+                    }
 
-//        holder.mDatabaseRef3.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
+                }
+            }
 
-//                    Posts ap = postSnapshot.getValue(Posts.class);
-//                    String pathstatus = ap.getPath();
-//                    final String idk = ap.getDescription();
-//                    final String key = ap.getKey();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                //    holder.mDatabaseRef3.child("timestamp").push().setValue(pathstatus);
-
-//                    Log.e("ppd","::"+idk);
-
-                   // String pp = (String) postSnapshot.child("path").getValue();
-                  //  Log.e("www",":: " + holder.storageRef);
-                  //  holder.storageRef = FirebaseStorage.getInstance().getReference().child("Posts").child(pathstatus);
-//                    holder.storageRef.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
-//                        @Override
-//                        public void onSuccess(StorageMetadata storageMetadata) {
-//
-//                            Calendar calendar = Calendar.getInstance();
-//                            calendar.setTimeInMillis(storageMetadata.getCreationTimeMillis());
-//
-//                            int mYear = calendar.get(Calendar.YEAR);
-//                            int mMonth = calendar.get(Calendar.MONTH);
-//                            int cMonth = mMonth+1;
-//                            int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-//                            int hour = calendar.get(Calendar.HOUR_OF_DAY);
-//                            int min = calendar.get(Calendar.MINUTE);
-//
-//                           // Log.e("metadata",""+calendar.get(Calendar.DAY_OF_MONTH)+"/"+calendar.get(Calendar.MONTH+1)+"/"+calendar.get(Calendar.YEAR)+" :: "+calendar.get(Calendar.HOUR_OF_DAY)+":"+calendar.get(Calendar.MINUTE));
-//
-//                            Log.e("ppd","::"+hour+":"+min+"  "+mDay+"/"+cMonth+"::"+idk);
-//
-//                            holder.mDatabaseRef3.child(key).push().setValue(holder.storageRef);
-//
-//                            holder.t_counter.setText(hour+":"+min+"  "+mDay+"/"+cMonth);
-//                        }
-//
-//                    }).addOnFailureListener(new OnFailureListener() {
-//                        @Override
-//                        public void onFailure(@NonNull Exception exception) {
-//                            // Uh-oh, an error occurred!
-//                        }
-////                    });
-//                }
-//            }
-
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
-
-//
-//        holder.mDBListener2 = holder.mQueryTimeRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                for (DataSnapshot psn : dataSnapshot.getChildren()){
-//                    Posts t_upload = psn.getValue(Posts.class);
-//
-//
-//
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
+            }
+        });
 
 
         holder.mDBListener = holder.mQueryCommentRef.addValueEventListener(new ValueEventListener() {
@@ -184,8 +133,6 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
                 Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-
 
         holder.commentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -238,15 +185,16 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         public DatabaseReference mDatabaseRef;
         public DatabaseReference mDatabaseRef2;
         public DatabaseReference mDatabaseRef3;
-        public StorageReference storageRef;
+    //    public StorageReference storageRef;
 
-        public DatabaseReference ref;
-        public DatabaseReference mostafa;
+    //  public DatabaseReference ref;
+      //  public DatabaseReference mostafa;
 
         public ValueEventListener mDBListener;
         public ValueEventListener mDBListener2;
 
         public DatabaseReference mCommentRef;
+        public DatabaseReference mTimeRef;
         public Query mQueryCommentRef;
         public Query mQueryTimeRef;
 
@@ -281,6 +229,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
             mCommentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
+            mTimeRef = FirebaseDatabase.getInstance().getReference().child("Posts");
 
 
             itemView.setOnClickListener(this);

@@ -3,6 +3,7 @@ import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ServerValue;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Posts {
 
@@ -12,11 +13,17 @@ public class Posts {
     private String userID;
   //private HashMap<String, Object> timestampCreated;
     private String category;
+    private String path;
+    private long ts;
 
     public Posts() {
     }
 
-    public Posts(String image_url, String description, String userID, String category) {
+    public Posts(long ts){
+        this.ts = ts;
+    }
+
+    public Posts(String path,String image_url, String description, String userID, String category) {
         //if description field left empty
         if (description.trim().equals("")) {
             description = "";
@@ -27,6 +34,7 @@ public class Posts {
         this.description = description;
         this.userID = userID;
         this.category = category;
+        this.path = path;
 
         /*  HashMap<String, Object> timestampNow = new HashMap<>();
         timestampNow.put("timestamp", ServerValue.TIMESTAMP);
@@ -50,6 +58,13 @@ public class Posts {
         return category;
     }
 
+    public String getPath() {
+        return path;
+    }
+
+    public long getTs() {
+        return ts;
+    }
 
 
     /*
@@ -70,6 +85,14 @@ public class Posts {
 
     public void setCategory(String category){
         this.category = category;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void setTs(long ts) {
+        this.ts = ts;
     }
 
 
