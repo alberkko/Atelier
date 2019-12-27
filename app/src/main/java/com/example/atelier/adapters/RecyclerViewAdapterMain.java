@@ -69,45 +69,32 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         holder.textViewName.setText(uploadCurrent.getDescription());
         Picasso.get().load(mUploads.get(position).getImage_url()).fit().centerCrop().into(holder.imageView);
 
+        long time2 = uploadCurrent.getTs();
+        long mills2 = time2 - System.currentTimeMillis();
+        long hours2 = mills2/(1000 * 60 * 60);
+        long mins2 = (mills2/(1000*60)) % 60;
+
+        if(hours2 >= 1){
+            String diff = hours2 + " hours ago";
+            holder.t_counter.setText(diff);
+           // Log.e("diff","::: "+diff);
+        }
+
+        else {
+            mins2 = Math.abs(mins2);
+            String diff = mins2 + " minutes ago";
+            holder.t_counter.setText(diff);
+           // Log.e("diff","::: "+diff);
+        }
+
+      //  holder.t_counter.setText();
+
 
         final String postId = uploadCurrent.getKey();
 
         holder.mDatabaseRef2 = holder.mDatabaseRef.child(postId);
         holder.mQueryCommentRef = holder.mCommentRef.orderByChild("c_PostID").equalTo(postId);
         holder.mQueryTimeRef = holder.mTimeRef;
-
-        holder.mDBListener2 = holder.mQueryTimeRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot psn : dataSnapshot.getChildren()){
-                    Posts t_up =psn.getValue(Posts.class);
-                    long time = t_up.getTs();
-
-
-
-                    long mills = time - System.currentTimeMillis();
-                    long hours = mills/(1000 * 60 * 60);
-                    long mins = (mills/(1000*60)) % 60;
-
-                    if(hours >= 1){
-                        String diff = hours + " hours ago";
-                        holder.t_counter.setText(diff);
-                    }
-
-                    else {
-                        mins = Math.abs(mins);
-                        String diff = mins + " minutes ago";
-                        holder.t_counter.setText(diff);
-                    }
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
 
         holder.mDBListener = holder.mQueryCommentRef.addValueEventListener(new ValueEventListener() {
@@ -131,6 +118,15 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
                 Toast.makeText(mContext, databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        holder.editpen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v ) {
+                Intent intent = new Intent(v.getContext(), PostActivity.class);
+                intent.putExtra("p_id", postId);
+                mContext.startActivity(intent);
             }
         });
 
@@ -204,6 +200,8 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         public int num;
         public TextView commentbtn;
         public TextView bookmarkbtn;
+        public TextView editpen;
+        public String adminemail;
 
         public ImageViewHolderMain(@NonNull View itemView) {
             super(itemView);
@@ -215,6 +213,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             bookmarkbtn = itemView.findViewById(R.id.bookmark_icon);
             textViewName = itemView.findViewById(R.id.post_description);
             imageView = itemView.findViewById(R.id.thumbnail);
+            editpen = itemView.findViewById(R.id.edit_icon);
             view_container = itemView.findViewById(R.id.container);
             mDatabaseRef = FirebaseDatabase.getInstance().getReference("Favorites");
             mDatabaseRef3 = FirebaseDatabase.getInstance().getReference("Posts");
@@ -230,7 +229,25 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
             mCommentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
             mTimeRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+            if(mCurrentUser != null) {
+                adminemail = mCurrentUser.getEmail();
+            }
+            else {
+                //nothing
+            }
 
+            if (mCurrentUser != null) {
+
+                if(adminemail.equals("admin@email.com")){
+                    commentbtn.setVisibility(View.VISIBLE);
+                }
+                else {
+                    commentbtn.setVisibility(View.GONE);
+                }
+            }
+            else if (mCurrentUser == null) {
+                commentbtn.setVisibility(View.GONE);
+            }
 
             itemView.setOnClickListener(this);
 

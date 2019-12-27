@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private String choic;
     private Query mDbQuerry;
     private LinearLayoutManager linearLayoutManager;
+    private String CurrentUserName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,14 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
+
+        if (mCurrentUser != null) {
+            CurrentUserName = mCurrentUser.getEmail();
+        } else {
+            //nothing
+        }
+
+        Log.e("admin","name::: " +CurrentUserName );
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
@@ -226,18 +236,25 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 else navDrawer.closeDrawer(Gravity.START);
             }
         });
+        
 
-
-
-
-//        mthreedots.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent startIntent = new Intent(MainActivity.this, AdminUploadActivity.class);
-//                startActivity(startIntent);
-//                finish();
-//            }
-//        });
+         if (mCurrentUser != null) {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.navmenuffs);
+            Menu menu = navigationView.getMenu();
+            MenuItem nav_add = menu.findItem(R.id.nav_add);
+            if(CurrentUserName.equals("admin@email.com")){
+                nav_add.setVisible(true);
+            }
+            else {
+                nav_add.setVisible(false);
+            }
+        }
+        else if (mCurrentUser == null) {
+            NavigationView navigationView = (NavigationView) findViewById(R.id.navmenuffs);
+            Menu menu = navigationView.getMenu();
+            MenuItem nav_add = menu.findItem(R.id.nav_add);
+             nav_add.setVisible(false);
+        }
 
 
 }
@@ -254,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             finish();
         }
     }
+
 
         //Add Post
     public void add(MenuItem item) {

@@ -50,24 +50,26 @@ public class RecyclerViewAdapterComment extends RecyclerView.Adapter<RecyclerVie
 //        holder.commentName.setText(uploadCurrent.getC_UserID());
 //
 //        get image from profile of user
-//        Picasso.get().load(uploadCurrent.getProfile_p_url()).fit().centerCrop().into(holder.commentPhoto);
+//
 
-        Log.e("rcc","::position::"+mcUploads.get(position));
-        Log.e("rcc","::comment::"+uploadCurrent.getComment());
+      //  Log.e("rcc","::position::"+mcUploads.get(position));
+     //   Log.e("rcc","::comment::"+uploadCurrent.getComment());
      //   Log.e("rcc","::profile photo::"+uploadCurrent.getProfile_p_url());
-        Log.e("rcc","::userid::"+uploadCurrent.getC_UserID());
+     //   Log.e("rcc","::userid::"+uploadCurrent.getC_UserID());
 
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference name = ref.child("Users").child(uploadCurrent.getC_UserID()).child("name");
+        DatabaseReference name = ref.child("Users").child(uploadCurrent.getC_UserID());
         name.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                    String username = dataSnapshot.getValue(String.class);
-                    holder.commentName.setText(username);
+                String username = dataSnapshot.child("name").getValue(String.class);
+                holder.commentName.setText(username);
 
-                    Log.e("rcc", "::userid::" + username);
+                String userphoto = dataSnapshot.child("img").getValue(String.class);
+                Picasso.get().load(userphoto).fit().centerCrop().into(holder.commentPhoto);
+                //    Log.e("rcc", "::userid::" + username);
 
             }
 

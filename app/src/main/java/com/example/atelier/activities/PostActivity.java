@@ -44,6 +44,7 @@ public class PostActivity extends AppCompatActivity {
     private EditText mEditTextFileName;
     private TextView mPostDescription;
     private ImageView mPostImage;
+    private ImageView mAdminImage;
     private TextView mUsername;
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
@@ -76,6 +77,7 @@ public class PostActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         mPostDescription = findViewById(R.id.post_desc);
         mPostImage = findViewById(R.id.thumbnail);
+        mAdminImage = findViewById(R.id.admin_p);
         mUsername = findViewById(R.id.username_aa2);
         mUsername.setText("Tier");
 
@@ -104,18 +106,20 @@ public class PostActivity extends AppCompatActivity {
         DatabaseReference mainRef = FirebaseDatabase.getInstance().getReference();
         DatabaseReference buildingRef = mainRef.child("Posts").child(p_id);
         buildingRef.addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String building_description = dataSnapshot.child("description").getValue(String.class);
-                    String building_img = dataSnapshot.child("image_url").getValue(String.class);
+                    String post_description = dataSnapshot.child("description").getValue(String.class);
+                    String post_img = dataSnapshot.child("image_url").getValue(String.class);
                   //  Toast.makeText(PostActivity.this, "post:::" + building_img, Toast.LENGTH_SHORT).show();
-                    mPostDescription.setText(building_description);
-                    Picasso.get().load(building_img).into(mPostImage);
+                    mPostDescription.setText(post_description);
+                    Picasso.get().load(post_img).into(mPostImage);
+                    String url = "https://firebasestorage.googleapis.com/v0/b/atlier-49a3a.appspot.com/o/Users%2F1577447182326.jpg?alt=media&token=8d59e26e-491b-4b67-9825-7d10e9d2ae1e";
+                    Picasso.get().load(url).into(mAdminImage);
 
-                    Log.e("rcc","::userid::"+building_description);
-                    Log.e("rcc","::userid::"+building_img);
+
+                  //  Log.e("rcc","::userid::"+building_description);
+                  //  Log.e("rcc","::userid::"+building_img);
                 }
 
             }
