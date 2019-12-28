@@ -7,9 +7,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.atelier.R;
@@ -33,14 +36,17 @@ import com.squareup.picasso.Picasso;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EditPostActivity extends AppCompatActivity {
     private TextView mButtonUpload;
     private EditText mEditTextFileName;
     private ImageView mImageView;
-    private ProgressBar mProgressBar;
-    private EditText mEditTextAddress;
-    private EditText mEditTextDescription;
-    private EditText mEditTextCategory;
+    //private ProgressBar mProgressBar;
+    //private EditText mEditTextAddress;
+    //private EditText mEditTextDescription;
+    //private EditText mEditTextCategory;
     private Uri mImageUri;
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
@@ -48,19 +54,21 @@ public class EditPostActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
     private DatabaseReference mDatabaseUser;
-    private double longt;
-    private double lat;
-    private double latFromDb;
-    private double longFromDb;
+    //private double longt;
+    //private double lat;
+    //private double latFromDb;
+    //private double longFromDb;
     private static final int PICK_IMAGE_REQUEST = 1;
     private DatabaseReference mDatabaseUser_name;
-    private DatabaseReference mDatabaseUser_address;
-    private DatabaseReference mDatabaseUser_desc;
+    //private DatabaseReference mDatabaseUser_address;
+    //private DatabaseReference mDatabaseUser_desc;
     private DatabaseReference mDatabaseUser_category;
     private DatabaseReference mDatabaseUser_img;
-    private DatabaseReference mDblat;
-    private DatabaseReference mDBlong;
+    //private DatabaseReference mDblat;
+    //private DatabaseReference mDBlong;
     private String p_id;
+    private Spinner spinner;
+    private String tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +85,36 @@ public class EditPostActivity extends AppCompatActivity {
         mImageView = findViewById(R.id.imageView_00);
         mStorageRef = FirebaseStorage.getInstance().getReference("Posts");
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Posts/Posts");
+        spinner = findViewById(R.id.spinnerUpload);
+
+/*
+        //SPINNER
+        List<String> category = new ArrayList<>();
+        category.add("Show all");
+        category.add("News");
+        category.add("Announcements");
+        category.add("Clothing pieces");
+
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, category);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(categoryAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String choice = spinner.getSelectedItem().toString();
+                if(!choice.equals("Criteria of categorization")) {
+                    tag = choice;
+                    oast.makeText(EditPostActivity.this,"u bo kategoria " + choice ,Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+*/
 
 
         //remember to get p_id from PostActivity
@@ -84,6 +122,7 @@ public class EditPostActivity extends AppCompatActivity {
 
         mDatabaseUser_name = FirebaseDatabase.getInstance().getReference().child("Posts").child(p_id).child("description");
         mDatabaseUser_img = FirebaseDatabase.getInstance().getReference().child("Posts").child(p_id).child("image_url");
+
 
         //GET ALL TOGETHER
 

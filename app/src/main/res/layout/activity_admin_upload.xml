@@ -18,21 +18,18 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="733dp">
 
                 <EditText
                     android:id="@+id/name_editText2"
-                    android:layout_width="0dp"
-                    android:layout_height="37dp"
+                    android:layout_width="339dp"
+                    android:layout_height="49dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginTop="52dp"
+                    android:layout_marginTop="68dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
                     android:hint="Write a caption..."
                     android:textSize="14sp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -40,11 +37,9 @@
                     android:id="@+id/imageView"
                     android:layout_width="300dp"
                     android:layout_height="300dp"
-                    android:layout_marginStart="52dp"
-                    android:layout_marginLeft="52dp"
-                    android:layout_marginTop="48dp"
+                    android:layout_marginTop="56dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.05"
+                    app:layout_constraintHorizontal_bias="0.495"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 

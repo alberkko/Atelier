@@ -110,7 +110,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
                     holder.num = holder.mcUploads.size();
                     String numm = String.valueOf(holder.num);
 
-                    holder.c_counter.setText(numm+" Comments");
+                    holder.c_counter.setText(numm +" Comments");
 
                 }
             }
