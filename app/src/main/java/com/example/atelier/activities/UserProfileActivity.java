@@ -48,7 +48,7 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
     private TextView mBCount;
 
     private ImageView mProfilePhoto;
-    private TextView mName;
+//    private TextView mName;
     private TextView mBio;
 
     @Override
@@ -58,7 +58,7 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
 
         getSupportActionBar().hide();
 
-        mName = findViewById(R.id.name33);
+//        mName = findViewById(R.id.name33);
         mBio = findViewById(R.id.bio33);
         mProfilePhoto = findViewById(R.id.prof_photo);
         mRecyclerView = findViewById(R.id.recycler_view_profile);
@@ -120,8 +120,8 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
                     String username = dataSnapshot.child("name").getValue(String.class);
                     mUsername.setText(username);
 
-                    String firstname = dataSnapshot.child("firstname").getValue(String.class);
-                    mName.setText(firstname);
+                    /*String firstname = dataSnapshot.child("firstname").getValue(String.class);
+                    mName.setText(firstname);*/
 
                     String bio = dataSnapshot.child("bio").getValue(String.class);
                     mBio.setText(bio);
