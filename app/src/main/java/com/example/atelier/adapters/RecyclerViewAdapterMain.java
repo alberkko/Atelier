@@ -1,6 +1,8 @@
 package com.example.atelier.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -53,6 +55,48 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         Posts uploadCurrent = mUploads.get(position);
         holder.textViewName.setText(uploadCurrent.getDescription());
         Picasso.get().load(mUploads.get(position).getImage_url()).fit().centerCrop().into(holder.imageView);
+        String p_id = uploadCurrent.getKey();
+
+        holder.mDatabaseRef4 = FirebaseDatabase.getInstance().getReference("Posts").child(p_id);
+
+        holder.deletebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // holder.mDatabaseRef4.removeValue();
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+                builder.setTitle("Confirm");
+                builder.setMessage("Are you sure you want to delete this post?");
+
+
+                builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        holder.mDatabaseRef4.removeValue();
+                        Toast.makeText(mContext, "Post deleted", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        // Do nothing
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+            }
+        });
+
 
         if(uploadCurrent.getCategory() != null){
             holder.tag.setText("#" + uploadCurrent.getCategory());
@@ -62,21 +106,29 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
         long time2 = uploadCurrent.getTs();
         long mills2 = time2 - System.currentTimeMillis();
+        long days2 = mills2/(1000 * 60 * 60 * 24);
         long hours2 = mills2/(1000 * 60 * 60);
         long mins2 = (mills2/(1000*60)) % 60;
 
+        days2 = Math.abs(days2);
         hours2 = Math.abs(hours2);
 
-        if(hours2 >= 1){
-            String diff = hours2 + " hours ago";
+
+        if(hours2 >= 1) {
+                String diff = hours2 + " hours ago";
+                holder.t_counter.setText(diff);
+        }
+
+        if(hours2 >= 25) {
+            String diff = days2 + " days ago";
             holder.t_counter.setText(diff);
         }
 
         else {
-            mins2 = Math.abs(mins2);
-            String diff = mins2 + " minutes ago";
-            holder.t_counter.setText(diff);
-        }
+                mins2 = Math.abs(mins2);
+                String diff = mins2 + " minutes ago";
+                holder.t_counter.setText(diff);
+            }
 
         final String postId = uploadCurrent.getKey();
 
@@ -117,6 +169,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
                 mContext.startActivity(intent);
             }
         });
+
 
         holder.commentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,8 +221,8 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         public DatabaseReference mDatabaseRef;
         public DatabaseReference mDatabaseRef2;
         public DatabaseReference mDatabaseRef3;
+        public DatabaseReference mDatabaseRef4;
         public ValueEventListener mDBListener;
-        public ValueEventListener mDBListener2;
 
         public DatabaseReference mCommentRef;
         public DatabaseReference mTimeRef;
@@ -183,6 +236,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         public TextView commentbtn;
         public TextView bookmarkbtn;
         public TextView editpen;
+        public TextView deletebtn;
         public String adminemail;
         public TextView tag;
 
@@ -193,6 +247,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             mCurrentUser = mAuth.getCurrentUser();
          //   mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
             commentbtn = itemView.findViewById(R.id.comment_icon);
+            deletebtn = itemView.findViewById(R.id.delete_icon);
             tag = itemView.findViewById(R.id.tag_inpost);
             bookmarkbtn = itemView.findViewById(R.id.bookmark_icon);
             textViewName = itemView.findViewById(R.id.post_description);
@@ -224,13 +279,16 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
                 if(adminemail.equals("admin@email.com")){
                     commentbtn.setVisibility(View.VISIBLE);
+                    deletebtn.setVisibility(View.VISIBLE);
                 }
                 else {
                     commentbtn.setVisibility(View.GONE);
+                    deletebtn.setVisibility(View.GONE);
                 }
             }
             else if (mCurrentUser == null) {
                 commentbtn.setVisibility(View.GONE);
+                deletebtn.setVisibility(View.GONE);
             }
 
             itemView.setOnClickListener(this);
