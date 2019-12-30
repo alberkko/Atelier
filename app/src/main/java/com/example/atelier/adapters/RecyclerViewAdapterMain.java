@@ -2,8 +2,6 @@ package com.example.atelier.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +19,6 @@ import com.example.atelier.activities.PostActivity;
 import com.example.atelier.models.Comments;
 import com.example.atelier.models.Favorites;
 import com.example.atelier.models.Posts;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -31,20 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
-
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-
-import static java.text.DateFormat.getDateTimeInstance;
-
 
 public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAdapterMain.ImageViewHolderMain> {
 
@@ -80,21 +65,18 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         long hours2 = mills2/(1000 * 60 * 60);
         long mins2 = (mills2/(1000*60)) % 60;
 
+        hours2 = Math.abs(hours2);
+
         if(hours2 >= 1){
             String diff = hours2 + " hours ago";
             holder.t_counter.setText(diff);
-           // Log.e("diff","::: "+diff);
         }
 
         else {
             mins2 = Math.abs(mins2);
             String diff = mins2 + " minutes ago";
             holder.t_counter.setText(diff);
-           // Log.e("diff","::: "+diff);
         }
-
-      //  holder.t_counter.setText();
-
 
         final String postId = uploadCurrent.getKey();
 
@@ -183,15 +165,9 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         LinearLayout view_container;
         public FirebaseAuth mAuth;
         public FirebaseUser mCurrentUser;
-    //    public DatabaseReference mDatabaseUser;
         public DatabaseReference mDatabaseRef;
         public DatabaseReference mDatabaseRef2;
         public DatabaseReference mDatabaseRef3;
-    //    public StorageReference storageRef;
-
-    //  public DatabaseReference ref;
-      //  public DatabaseReference mostafa;
-
         public ValueEventListener mDBListener;
         public ValueEventListener mDBListener2;
 

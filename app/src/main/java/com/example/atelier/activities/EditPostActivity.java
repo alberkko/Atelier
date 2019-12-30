@@ -83,28 +83,36 @@ public class EditPostActivity extends AppCompatActivity {
         mDatabaseUser_tag.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                final String db_tag = dataSnapshot.getValue(String.class);
+                 db_tag = dataSnapshot.getValue(String.class);
 
                 //SPINNER
                 List<String> category = new ArrayList<>();
 
-                category.add(db_tag);
-                category.add("Show all");
-                category.add("News");
-                category.add("Announcements");
-                category.add("Clothing pieces");
 
-                if(db_tag.equals("News")) {
-                category.remove(2);
+
+                if(db_tag != null) {
+                    category.add(db_tag);
+                    category.add("Show all");
+                    category.add("News");
+                    category.add("Announcements");
+                    category.add("Clothing pieces");
+
+                    if (db_tag.equals("News")) {
+                        category.remove(2);
+                    } else if (db_tag.equals("Announcements")) {
+                        category.remove(3);
+                    } else if (db_tag.equals("Clothing pieces")) {
+                        category.remove(4);
+                    } else if (db_tag.equals("Show all")) {
+                        category.remove(1);
+                    }
                 }
-                else if(db_tag.equals("Announcements")) {
-                    category.remove(3);
-                }
-                else if(db_tag.equals("Clothing pieces")) {
-                    category.remove(4);
-                }
-                else if(db_tag.equals("Show all")) {
-                    category.remove(1);
+                else{
+                    db_tag = "Show all";
+                    category.add(db_tag);
+                    category.add("News");
+                    category.add("Announcements");
+                    category.add("Clothing pieces");
                 }
 
                 ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(EditPostActivity.this, android.R.layout.simple_spinner_item, category);
