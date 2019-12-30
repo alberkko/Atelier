@@ -5,6 +5,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -43,10 +44,6 @@ public class EditPostActivity extends AppCompatActivity {
     private TextView mButtonUpload;
     private EditText mEditTextFileName;
     private ImageView mImageView;
-    //private ProgressBar mProgressBar;
-    //private EditText mEditTextAddress;
-    //private EditText mEditTextDescription;
-    //private EditText mEditTextCategory;
     private Uri mImageUri;
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
@@ -54,21 +51,15 @@ public class EditPostActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
     private DatabaseReference mDatabaseUser;
-    //private double longt;
-    //private double lat;
-    //private double latFromDb;
-    //private double longFromDb;
     private static final int PICK_IMAGE_REQUEST = 1;
     private DatabaseReference mDatabaseUser_name;
-    //private DatabaseReference mDatabaseUser_address;
-    //private DatabaseReference mDatabaseUser_desc;
+    private DatabaseReference mDatabaseUser_tag;
     private DatabaseReference mDatabaseUser_category;
     private DatabaseReference mDatabaseUser_img;
-    //private DatabaseReference mDblat;
-    //private DatabaseReference mDBlong;
     private String p_id;
     private Spinner spinner;
     private String tag;
+    private String db_tag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,38 +78,60 @@ public class EditPostActivity extends AppCompatActivity {
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("Posts/Posts");
         spinner = findViewById(R.id.spinnerUpload);
 
-/*
-        //SPINNER
-        List<String> category = new ArrayList<>();
-        category.add("Show all");
-        category.add("News");
-        category.add("Announcements");
-        category.add("Clothing pieces");
-
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, category);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(categoryAdapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        p_id = getIntent().getExtras().get("p_id").toString();
+        mDatabaseUser_tag = FirebaseDatabase.getInstance().getReference().child("Posts").child(p_id).child("category");
+        mDatabaseUser_tag.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String choice = spinner.getSelectedItem().toString();
-                if(!choice.equals("Criteria of categorization")) {
-                    tag = choice;
-                    oast.makeText(EditPostActivity.this,"u bo kategoria " + choice ,Toast.LENGTH_LONG).show();
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                final String db_tag = dataSnapshot.getValue(String.class);
+
+                //SPINNER
+                List<String> category = new ArrayList<>();
+
+                category.add(db_tag);
+                category.add("Show all");
+                category.add("News");
+                category.add("Announcements");
+                category.add("Clothing pieces");
+
+                if(db_tag.equals("News")) {
+                category.remove(2);
                 }
+                else if(db_tag.equals("Announcements")) {
+                    category.remove(3);
+                }
+                else if(db_tag.equals("Clothing pieces")) {
+                    category.remove(4);
+                }
+                else if(db_tag.equals("Show all")) {
+                    category.remove(1);
+                }
+
+                ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(EditPostActivity.this, android.R.layout.simple_spinner_item, category);
+                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(categoryAdapter);
+                spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        String choice = spinner.getSelectedItem().toString();
+                        if(!choice.equals(db_tag)) {
+                            tag = choice;
+                            Toast.makeText(EditPostActivity.this,"u bo kategoria " + choice ,Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+                    }
+                });
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
-*/
 
-
-        //remember to get p_id from PostActivity
-        p_id = getIntent().getExtras().get("p_id").toString();
 
         mDatabaseUser_name = FirebaseDatabase.getInstance().getReference().child("Posts").child(p_id).child("description");
         mDatabaseUser_img = FirebaseDatabase.getInstance().getReference().child("Posts").child(p_id).child("image_url");
@@ -166,6 +179,8 @@ public class EditPostActivity extends AppCompatActivity {
 
                     String setName = mEditTextFileName.getText().toString();
                     mDatabaseUser_name.setValue(setName);
+
+                    mDatabaseUser_tag.setValue(tag);
 
                     uploadFile();
                 }
@@ -229,7 +244,9 @@ public class EditPostActivity extends AppCompatActivity {
                         }
                     });
         } else {
-            Toast.makeText(this, "Please select a photo", Toast.LENGTH_SHORT).show();
+            Intent startIntent = new Intent(EditPostActivity.this, MainActivity.class);
+            startActivity(startIntent);
+            finish();
         }
     }
 
