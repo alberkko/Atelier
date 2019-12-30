@@ -69,6 +69,12 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         holder.textViewName.setText(uploadCurrent.getDescription());
         Picasso.get().load(mUploads.get(position).getImage_url()).fit().centerCrop().into(holder.imageView);
 
+        if(uploadCurrent.getCategory() != null){
+            holder.tag.setText("#" + uploadCurrent.getCategory());
+        }else{
+            holder.tag.setVisibility(View.GONE);
+        }
+
         long time2 = uploadCurrent.getTs();
         long mills2 = time2 - System.currentTimeMillis();
         long hours2 = mills2/(1000 * 60 * 60);
@@ -97,6 +103,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         holder.mQueryTimeRef = holder.mTimeRef;
 
 
+
         holder.mDBListener = holder.mQueryCommentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -109,7 +116,6 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
                     holder.mcUploads.add(c_upload);
                     holder.num = holder.mcUploads.size();
                     String numm = String.valueOf(holder.num);
-
                     holder.c_counter.setText(numm +" Comments");
 
                 }
@@ -202,6 +208,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         public TextView bookmarkbtn;
         public TextView editpen;
         public String adminemail;
+        public TextView tag;
 
         public ImageViewHolderMain(@NonNull View itemView) {
             super(itemView);
@@ -210,6 +217,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             mCurrentUser = mAuth.getCurrentUser();
          //   mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
             commentbtn = itemView.findViewById(R.id.comment_icon);
+            tag = itemView.findViewById(R.id.tag_inpost);
             bookmarkbtn = itemView.findViewById(R.id.bookmark_icon);
             textViewName = itemView.findViewById(R.id.post_description);
             imageView = itemView.findViewById(R.id.thumbnail);
