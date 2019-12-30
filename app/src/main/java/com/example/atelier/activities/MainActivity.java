@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     private Query mDbQuerry;
     private LinearLayoutManager linearLayoutManager;
     private String CurrentUserName;
+    //private Button deletepost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
