@@ -112,8 +112,8 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         category.add("Announcements");
         category.add("Clothing pieces");
 
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, category);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, R.layout.spinner_main, category);
+        categoryAdapter.setDropDownViewResource(R.layout.spinner_items);
         spinner.setAdapter(categoryAdapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -285,6 +285,19 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             Toast.makeText(MainActivity.this, "Only admin is supposed to upload ???",Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
+
+    //Go to About Section
+
+    public void about(MenuItem item){
+        Intent i = new Intent(this, AboutActivity.class);
+        startActivity(i);
+    }
+
+
+
 
 
         //Criteria - on Menu Slide

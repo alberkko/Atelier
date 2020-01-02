@@ -48,7 +48,7 @@ public class SignupActivity extends AppCompatActivity {
                     email.setError("Seems like you forgot to enter your email");
                     email.requestFocus();
                 } else if (pasw.isEmpty()) {
-                    password.setError("You cannot login without a password. Duh!");
+                    password.setError("You cannot login without a password");
                     password.requestFocus();
                 } else if (username.isEmpty()) {
                     name.setError("We will only be using your name just to know how to refer to you");

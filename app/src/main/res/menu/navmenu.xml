@@ -6,28 +6,24 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/nav_profile"
-            android:title="My profile"
+            android:title="My Profile"
             android:onClick="profile"
             />
 
         <item
             android:id="@+id/nav_add"
-            android:title="Add a post"
+            android:title="Add a Post"
             android:onClick="add"
             />
 
-
     </group>
 
-    <group>
-        <item
-            android:id="@+id/nav_criteria"
-            android:title="Criteria of categorization" />
-    </group>
+
     <group>
         <item
             android:id="@+id/nav_about"
-            android:title="About the project" />
+            android:title="About Us"
+            android:onClick="about"/>
     </group>
 
 </menu>
