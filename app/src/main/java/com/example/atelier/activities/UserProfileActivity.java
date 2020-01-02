@@ -143,6 +143,9 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
             }
         });
 
+
+        /*
+
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener()
         {
@@ -154,6 +157,8 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
 
             }
         });
+
+         */
 
 
         mImgView = findViewById(R.id.editpenn);
