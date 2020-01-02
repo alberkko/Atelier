@@ -65,7 +65,7 @@ public class PostActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
-       // mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
         mButtonSend = findViewById(R.id.button_send);
         mEditTextFileName = findViewById(R.id.comment_field);
         mRecyclerView = findViewById(R.id.recycler_view_too);
@@ -114,7 +114,7 @@ public class PostActivity extends AppCompatActivity {
                   //  Toast.makeText(PostActivity.this, "post:::" + building_img, Toast.LENGTH_SHORT).show();
                     mPostDescription.setText(post_description);
                     Picasso.get().load(post_img).into(mPostImage);
-                    String url = "https://firebasestorage.googleapis.com/v0/b/atlier-49a3a.appspot.com/o/Users%2F1577447182326.jpg?alt=media&token=8d59e26e-491b-4b67-9825-7d10e9d2ae1e";
+                    String url = "https://firebasestorage.googleapis.com/v0/b/atlier-49a3a.appspot.com/o/Users%2F1577993085736.jpg?alt=media&token=d138a80b-6936-4bf9-83b5-a96eefe28c83";
                     Picasso.get().load(url).into(mAdminImage);
 
 
