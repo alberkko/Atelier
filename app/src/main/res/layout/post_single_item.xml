@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="#424242">
+    android:background="#121214">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:drawableLeft="@drawable/ic_bookmark_black_24dp"
+            android:drawableLeft="@drawable/ic_bookmark_white_24dp"
             app:layout_constraintStart_toEndOf="@+id/edit_icon"
             app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
@@ -68,7 +68,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:clickable="true"
-            android:drawableLeft="@drawable/ic_edit_black_24dp"
+            android:drawableLeft="@drawable/ic_edit_white_24dp"
             app:layout_constraintStart_toEndOf="@+id/bookmark_icon"
             app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
@@ -79,7 +79,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:clickable="true"
-            android:drawableLeft="@drawable/ic_comment_black_24dp"
+            android:drawableLeft="@drawable/ic_comment_white_24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
@@ -144,7 +144,7 @@
             android:id="@+id/textView"
             android:layout_width="412dp"
             android:layout_height="11dp"
-            android:background="#303030"
+            android:background="#050505"
             android:text=""
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
