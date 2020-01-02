@@ -170,7 +170,7 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
     public void onItemClick(int position) {
         Favorites selectedItem = mUploads.get(position);
         String postId = selectedItem.getmPost_id();
-        Toast.makeText(UserProfileActivity.this, "::"+postId, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(UserProfileActivity.this, "::"+postId, Toast.LENGTH_SHORT).show();
         Intent mainIntent = new Intent(UserProfileActivity.this, PostActivity.class);
         mainIntent.putExtra("p_id", postId);
         startActivity(mainIntent);
