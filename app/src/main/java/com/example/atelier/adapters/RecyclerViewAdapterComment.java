@@ -52,10 +52,10 @@ public class RecyclerViewAdapterComment extends RecyclerView.Adapter<RecyclerVie
 //        get image from profile of user
 //
 
-      //  Log.e("rcc","::position::"+mcUploads.get(position));
-     //   Log.e("rcc","::comment::"+uploadCurrent.getComment());
-     //   Log.e("rcc","::profile photo::"+uploadCurrent.getProfile_p_url());
-     //   Log.e("rcc","::userid::"+uploadCurrent.getC_UserID());
+        //  Log.e("rcc","::position::"+mcUploads.get(position));
+        //   Log.e("rcc","::comment::"+uploadCurrent.getComment());
+        //   Log.e("rcc","::profile photo::"+uploadCurrent.getProfile_p_url());
+        //   Log.e("rcc","::userid::"+uploadCurrent.getC_UserID());
 
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();

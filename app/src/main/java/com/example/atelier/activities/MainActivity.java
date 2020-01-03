@@ -1,7 +1,6 @@
 package com.example.atelier.activities;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,8 +23,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.atelier.R;
-import com.example.atelier.adapters.RecyclerViewAdapterMain;
-import com.example.atelier.models.Comments;
 import com.example.atelier.models.Posts;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +35,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             //nothing
         }
 
-        Log.e("admin","name::: " +CurrentUserName );
+        Log.e("admin", "name::: " + CurrentUserName);
         mDrawerLayout = findViewById(R.id.drawer_layout);
         mToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.open, R.string.close);
         mDrawerLayout.addDrawerListener(mToggle);
@@ -120,9 +115,9 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String choice = spinner.getSelectedItem().toString();
-                if(!choice.equals("Show all")) {
+                if (!choice.equals("Show all")) {
                     choic = choice;
-                  //  Toast.makeText(MainActivity.this,"u bo kategoria" + choice ,Toast.LENGTH_LONG).show();
+                    //  Toast.makeText(MainActivity.this,"u bo kategoria" + choice ,Toast.LENGTH_LONG).show();
 
                     //GET DATA FROM FIREBASE
                     mDbQuerry = mDatabaseRef.orderByChild("category").equalTo(choic);
@@ -145,12 +140,10 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                         }
                     });
 
-                }
-
-                else {
+                } else {
 
                     //GET DATA FROM FIREBASE
-                   // mDbQuerry = mDatabaseRef.orderByChild("category").equalTo(choic);
+                    // mDbQuerry = mDatabaseRef.orderByChild("category").equalTo(choic);
 
                     mDatabaseRef.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -180,7 +173,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
         });
 
 
-
         //GET NAME TO PUT ON THE SLIDE MENU
         if (mCurrentUser != null) {
             DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -206,8 +198,6 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
             MenuItem nav_profile = menu.findItem(R.id.nav_profile);
             nav_profile.setTitle("GUEST");
         }
-
-
 
 
         //DISPLAY ON LOGIN ONLY
@@ -238,31 +228,29 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
                 else navDrawer.closeDrawer(Gravity.START);
             }
         });
-        
 
-         if (mCurrentUser != null) {
+
+        if (mCurrentUser != null) {
             NavigationView navigationView = (NavigationView) findViewById(R.id.navmenuffs);
             Menu menu = navigationView.getMenu();
             MenuItem nav_add = menu.findItem(R.id.nav_add);
-            if(CurrentUserName.equals("admin@email.com")){
+            if (CurrentUserName.equals("admin@email.com")) {
                 nav_add.setVisible(true);
-            }
-            else {
+            } else {
                 nav_add.setVisible(false);
             }
-        }
-        else if (mCurrentUser == null) {
+        } else if (mCurrentUser == null) {
             NavigationView navigationView = (NavigationView) findViewById(R.id.navmenuffs);
             Menu menu = navigationView.getMenu();
             MenuItem nav_add = menu.findItem(R.id.nav_add);
-             nav_add.setVisible(false);
+            nav_add.setVisible(false);
         }
 
 
-}
+    }
 
 
-//Profile on Menu Slider
+    //Profile on Menu Slider
     public void profile(MenuItem item) {
         if (mCurrentUser != null) {
             Intent startIntent = new Intent(MainActivity.this, UserProfileActivity.class);
@@ -275,66 +263,39 @@ public class MainActivity extends AppCompatActivity implements RecyclerViewAdapt
     }
 
 
-        //Add Post
+    //Add Post
     public void add(MenuItem item) {
-        if(mCurrentUser != null) {
+        if (mCurrentUser != null) {
             Intent intent = new Intent(this, AdminUploadActivity.class);
             startActivity(intent);
-        }
-        else {
-            Toast.makeText(MainActivity.this, "Only admin is supposed to upload ???",Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(MainActivity.this, "Only admin is supposed to upload ???", Toast.LENGTH_SHORT).show();
         }
     }
 
 
-
-
-    //Go to About Section
-
-    public void about(MenuItem item){
+    public void about(MenuItem item) {
         Intent i = new Intent(this, AboutActivity.class);
         startActivity(i);
     }
 
 
+    //On RecyclerView Item Click
+    @Override
+    public void onItemClick(int position) {
+        Posts selectedItem = mUploads.get(position);
+        String postId = selectedItem.getKey();
+        Intent mainIntent = new Intent(MainActivity.this, PostActivity.class);
+        mainIntent.putExtra("p_id", postId);
+        startActivity(mainIntent);
+    }
 
-
-
-        //Criteria - on Menu Slide
-//    public void criteria(MenuItem item) {
-//
-//    }
-
-
-        //On RecyclerView Item Click
-        @Override
-        public void onItemClick ( int position){
-            Posts selectedItem = mUploads.get(position);
-            String postId = selectedItem.getKey();
-            Intent mainIntent = new Intent(MainActivity.this, PostActivity.class);
-            mainIntent.putExtra("p_id", postId);
-            startActivity(mainIntent);
-        }
-
-        //Stop listening when activity has ended.
-//    @Override
-//    protected void onDestroy() {
-//        super.onDestroy();
-//        mDatabaseRef.removeEventListener(mDBListener);
-//    }
 
     private void openUploadActivity() {
         Intent intent = new Intent(this, AdminUploadActivity.class);
         startActivity(intent);
     }
 
-//
-//
-//    private void openChoseMapActivity() {
-//        Intent intent = new Intent(this, ChoseonMapActivity.class);
-//        startActivity(intent);
-//
-//    }
 
     private void sendToStart() {
         Intent startIntent = new Intent(MainActivity.this, LoginActivity.class);

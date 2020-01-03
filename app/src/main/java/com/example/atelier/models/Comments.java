@@ -44,7 +44,6 @@ public class Comments {
     }
 
 
-
     @Exclude
     public String getKey() {
         return mKey;

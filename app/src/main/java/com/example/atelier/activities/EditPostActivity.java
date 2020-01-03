@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.atelier.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -83,14 +84,13 @@ public class EditPostActivity extends AppCompatActivity {
         mDatabaseUser_tag.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                 db_tag = dataSnapshot.getValue(String.class);
+                db_tag = dataSnapshot.getValue(String.class);
 
                 //SPINNER
                 List<String> category = new ArrayList<>();
 
 
-
-                if(db_tag != null) {
+                if (db_tag != null) {
                     category.add(db_tag);
                     category.add("Show all");
                     category.add("News");
@@ -106,8 +106,7 @@ public class EditPostActivity extends AppCompatActivity {
                     } else if (db_tag.equals("Show all")) {
                         category.remove(1);
                     }
-                }
-                else{
+                } else {
                     db_tag = "Show all";
                     category.add(db_tag);
                     category.add("News");
@@ -122,9 +121,9 @@ public class EditPostActivity extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         String choice = spinner.getSelectedItem().toString();
-                        if(!choice.equals(db_tag)) {
+                        if (!choice.equals(db_tag)) {
                             tag = choice;
-                            Toast.makeText(EditPostActivity.this,"u bo kategoria " + choice ,Toast.LENGTH_LONG).show();
+                            Toast.makeText(EditPostActivity.this, "u bo kategoria " + choice, Toast.LENGTH_LONG).show();
                         }
                     }
 

@@ -103,6 +103,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+
         void onDeleteClick(int position);
     }
 

@@ -37,15 +37,15 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
 
-//    private EditText mFirstName;
+    //    private EditText mFirstName;
     private EditText mName;
     private EditText mBio;
     private DatabaseReference mDatabaseUser_name;
-//    private DatabaseReference mDatabaseUser_firstname;
+    //    private DatabaseReference mDatabaseUser_firstname;
     private DatabaseReference mDatabaseUser_bio;
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
-//    private DatabaseReference dbRef2;
+    //    private DatabaseReference dbRef2;
     private DatabaseReference dbRef3;
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
@@ -83,9 +83,8 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
                 if (p_image != null && !p_image.isEmpty()) {
                     Picasso.get().load(p_image).into(mProfilePhoto);
-                }
-                else{
-                  //  Picasso.get().load(R.drawable.ic_person_black_24dp).into(mProfilePhoto);
+                } else {
+                    //  Picasso.get().load(R.drawable.ic_person_black_24dp).into(mProfilePhoto);
                 }
             }
 
@@ -116,7 +115,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
         /*mDatabaseUser_firstname = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("firstname");
         mDatabaseUser_firstname.addValueEventListener(new ValueEventListener() {
-            @Override
+            @Overridehttps://open.spotify.com/
             public void onDataChange(DataSnapshot dataSnapshot) {
                 mFirstName.setText(dataSnapshot.getValue(String.class));
             }

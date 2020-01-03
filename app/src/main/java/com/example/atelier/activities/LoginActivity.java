@@ -47,11 +47,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser mFirebaseUser = mFirebaseAuth.getCurrentUser();
                 if (mFirebaseUser != null) {
-                    Toast.makeText(LoginActivity.this,"You just got logged in",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "You just got logged in", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(LoginActivity.this, MainActivity.class);
                     startActivity(i);
-                }
-                else {
+                } else {
                     //Toast.makeText(LoginActivity.this,"Some Login Error",Toast.LENGTH_SHORT).show();
                 }
             }
@@ -62,33 +61,28 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String mail = email.getText().toString();
                 String pasw = password.getText().toString();
-                if(mail.isEmpty()){
+                if (mail.isEmpty()) {
                     email.setError("Email pls");
                     email.requestFocus();
-                }
-                else  if(pasw.isEmpty()){
+                } else if (pasw.isEmpty()) {
                     password.setError("Password pls");
                     password.requestFocus();
-                }
-                else  if(mail.isEmpty() && pasw.isEmpty()){
-                    Toast.makeText(LoginActivity.this,"Fields Are Empty!",Toast.LENGTH_SHORT).show();
-                }
-                else  if(!(mail.isEmpty() && pasw.isEmpty())){
+                } else if (mail.isEmpty() && pasw.isEmpty()) {
+                    Toast.makeText(LoginActivity.this, "Fields Are Empty!", Toast.LENGTH_SHORT).show();
+                } else if (!(mail.isEmpty() && pasw.isEmpty())) {
                     mFirebaseAuth.signInWithEmailAndPassword(mail, pasw).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(!task.isSuccessful()){
-                                Toast.makeText(LoginActivity.this,"Login Error, Try Again",Toast.LENGTH_SHORT).show();
-                            }
-                            else{
-                                Intent intMain = new Intent(LoginActivity.this,MainActivity.class);
+                            if (!task.isSuccessful()) {
+                                Toast.makeText(LoginActivity.this, "Login Error, Try Again", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Intent intMain = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intMain);
                             }
                         }
                     });
-                }
-                else{
-                    Toast.makeText(LoginActivity.this,"Error Occurred!",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(LoginActivity.this, "Error Occurred!", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -110,7 +104,6 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     @Override

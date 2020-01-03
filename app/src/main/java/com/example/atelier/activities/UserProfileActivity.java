@@ -7,10 +7,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.atelier.R;
 import com.example.atelier.adapters.RecyclerViewAdapter;
 import com.example.atelier.models.Comments;
@@ -26,6 +28,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,14 +44,11 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
     private ValueEventListener mDBListener;
     private DatabaseReference mDatabaseCurrentUser;
     private Query mQueryCurrentUser;
-    private TextView mUsername;
     private ImageView mImgView;
     private int num;
-
     private TextView mBCount;
-
+    private TextView mUsername;
     private ImageView mProfilePhoto;
-//    private TextView mName;
     private TextView mBio;
 
     @Override
@@ -58,7 +58,6 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
 
         getSupportActionBar().hide();
 
-//        mName = findViewById(R.id.name33);
         mBio = findViewById(R.id.bio33);
         mProfilePhoto = findViewById(R.id.prof_photo);
         mRecyclerView = findViewById(R.id.recycler_view_profile);
@@ -79,8 +78,9 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
         mDatabaseCurrentUser = FirebaseDatabase.getInstance().getReference().child("Favorites");
         mQueryCurrentUser = mDatabaseCurrentUser.orderByChild("user_id").equalTo(CurrentUserId);
 
-        Log.e("work2","here:db:"+mDatabaseCurrentUser);
-        Log.e("work2","here:qq:"+mQueryCurrentUser);
+        Log.e("work2", "here:db:" + mDatabaseCurrentUser);
+        Log.e("work2", "here:qq:" + mQueryCurrentUser);
+
 
         //DISPLAY NUMBER OF FAVORITED POSTS ON PROFILE
         mDBListener = mQueryCurrentUser.addValueEventListener(new ValueEventListener() {
@@ -97,8 +97,8 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
                     String numm = String.valueOf(num);
                     mBCount.setText(numm);
 
-                    Log.e("work2","here:qqMCMCMC:"+mUploads);
-                    Log.e("whatisthisfor","now here here::"+numm);
+                    Log.e("work2", "here:qqMCMCMC:" + mUploads);
+                    Log.e("whatisthisfor", "now here here::" + numm);
                 }
 
                 mAdapter.notifyDataSetChanged();
@@ -115,22 +115,17 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
         DatabaseReference name = ref.child("Users").child(mCurrentUser.getUid());
         name.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange (@NonNull DataSnapshot dataSnapshot){
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     String username = dataSnapshot.child("name").getValue(String.class);
                     mUsername.setText(username);
-
-                    /*String firstname = dataSnapshot.child("firstname").getValue(String.class);
-                    mName.setText(firstname);*/
-
                     String bio = dataSnapshot.child("bio").getValue(String.class);
                     mBio.setText(bio);
 
                     String profile_photo = dataSnapshot.child("img").getValue(String.class);
                     if (profile_photo != null && !profile_photo.isEmpty()) {
                         Picasso.get().load(profile_photo).into(mProfilePhoto);
-                    }
-                    else{
+                    } else {
                         //do not retrieve photo
                         //Picasso.get().load(R.drawable.ic_person_black_24dp).into(mProfilePhoto);
                     }
@@ -142,23 +137,6 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
 
             }
         });
-
-
-        /*
-
-        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                //idk, we'll think of something
-               // startActivity(new Intent(getApplicationContext(), ChoseonMapActivity.class));
-
-            }
-        });
-
-         */
 
 
         mImgView = findViewById(R.id.editpenn);
@@ -184,7 +162,7 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
     @Override
     public void onDeleteClick(int position) {
 
-        //DELETE ONLY DELETES IMAGES FROM STORAGE
+        //DELETE ONLY DELETED IMAGES FROM STORAGE
         Favorites selectedItem = mUploads.get(position);
         final String selectedKey = selectedItem.getKey();
 

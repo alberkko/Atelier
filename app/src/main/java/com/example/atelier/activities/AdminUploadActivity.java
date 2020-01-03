@@ -92,9 +92,9 @@ public class AdminUploadActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String choice = spinner.getSelectedItem().toString();
-                if(!choice.equals("Criteria of categorization")) {
+                if (!choice.equals("Criteria of categorization")) {
                     tag = choice;
-                    Toast.makeText(AdminUploadActivity.this,"u bo kategoria " + choice ,Toast.LENGTH_LONG).show();
+                    Toast.makeText(AdminUploadActivity.this, "u bo kategoria " + choice, Toast.LENGTH_LONG).show();
                 }
             }
 
@@ -105,7 +105,6 @@ public class AdminUploadActivity extends AppCompatActivity {
         });
 
 
-        //open file chooser to select an image
         mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,7 +112,7 @@ public class AdminUploadActivity extends AppCompatActivity {
             }
         });
 
-        //when "upload" clicked
+
         mButtonUpload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,11 +161,11 @@ public class AdminUploadActivity extends AppCompatActivity {
 
     //function to upload image to Firebase storage and send URL to Database
     private void uploadFile() {
-        if (mImageUri == null ) {
+        if (mImageUri == null) {
             Toast.makeText(this, "No image selected", Toast.LENGTH_LONG).show();
         } else {
 
-            final String path = "Posts/"+System.currentTimeMillis()+ "." + getFileExtension(mImageUri);
+            final String path = "Posts/" + System.currentTimeMillis() + "." + getFileExtension(mImageUri);
             StorageReference fileReference = mStorageRef.child(path);
 
             mUploadTask = fileReference.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -182,12 +181,12 @@ public class AdminUploadActivity extends AppCompatActivity {
 
                     Posts upload;
 
-                   //call the constructor from the Posts class in "models" package
-                    upload = new Posts(path,downloadUrl.toString(), mEditTextFileName.getText().toString().trim(), mAuth.getUid(), tag);
+                    //call the constructor from the Posts class in "models" package
+                    upload = new Posts(path, downloadUrl.toString(), mEditTextFileName.getText().toString().trim(), mAuth.getUid(), tag);
                     final String uploadId = mDatabaseRef.push().getKey();
                     mDatabaseRef.child(uploadId).setValue(upload);
 
-                    mStorageRef2=FirebaseStorage.getInstance().getReference().child("Posts").child(path);
+                    mStorageRef2 = FirebaseStorage.getInstance().getReference().child("Posts").child(path);
 
                     mStorageRef2.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
                         @Override
@@ -199,22 +198,22 @@ public class AdminUploadActivity extends AppCompatActivity {
                             long mills = storageMetadata.getCreationTimeMillis();
 
 
-                            Log.e("storage time",":: "+storageMetadata.getCreationTimeMillis());
-                            Log.e("current time",":: "+System.currentTimeMillis());
+                            Log.e("storage time", ":: " + storageMetadata.getCreationTimeMillis());
+                            Log.e("current time", ":: " + System.currentTimeMillis());
 
-                         //   long hours = mills/(1000 * 60 * 60);
-                         //   long mins = (mills/(1000*60)) % 60;
-                         //   String diff = hours + ":" + mins;
+                            //   long hours = mills/(1000 * 60 * 60);
+                            //   long mins = (mills/(1000*60)) % 60;
+                            //   String diff = hours + ":" + mins;
 
                             int mYear = calendar.get(Calendar.YEAR);
                             int mMonth = calendar.get(Calendar.MONTH);
-                            int cMonth = mMonth+1;
+                            int cMonth = mMonth + 1;
                             int mDay = calendar.get(Calendar.DAY_OF_MONTH);
                             int hour = calendar.get(Calendar.HOUR_OF_DAY);
                             int min = calendar.get(Calendar.MINUTE);
 
                             //UPLOAD time
-                            String ts = hour + ":"+min+", "+mDay+"/"+cMonth+"/"+mYear;
+                            String ts = hour + ":" + min + ", " + mDay + "/" + cMonth + "/" + mYear;
                             mDatabaseRef.child(uploadId).child("ts").setValue(storageMetadata.getCreationTimeMillis());
 
 
@@ -251,7 +250,7 @@ public class AdminUploadActivity extends AppCompatActivity {
         }
     }
 
-    //method to go to the list of posts (main activity) after pressing upload
+
     private void openImagesActivity() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);

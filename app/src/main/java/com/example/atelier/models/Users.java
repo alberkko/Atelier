@@ -1,4 +1,5 @@
 package com.example.atelier.models;
+
 import com.google.firebase.database.Exclude;
 
 public class Users {
@@ -37,6 +38,7 @@ public class Users {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public void setName(String name) {
         this.name = name;
     }
