@@ -64,6 +64,9 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         holder.deletebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // holder.mDatabaseRef4.removeValue();
+
+
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
                 builder.setTitle("Confirm");
@@ -85,7 +88,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // Do nothingz
+                        // Do nothing
                         dialog.dismiss();
                     }
                 });
@@ -254,8 +257,6 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             t_counter = itemView.findViewById(R.id.textView3);
             mcUploads = new ArrayList<>();
             mpUploads = new ArrayList<>();
-
-
             mCommentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
             mTimeRef = FirebaseDatabase.getInstance().getReference().child("Posts");
             if (mCurrentUser != null) {
