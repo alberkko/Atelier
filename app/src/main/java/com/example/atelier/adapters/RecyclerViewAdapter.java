@@ -25,7 +25,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     private Context mContext;
     private List<Favorites> mUploads;
     private OnItemClickListener mListener;
-    Typeface font;
 
     public RecyclerViewAdapter(Context context, List<Favorites> uploads) {
         mContext = context;
@@ -103,6 +102,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public interface OnItemClickListener {
         void onItemClick(int position);
+
         void onDeleteClick(int position);
     }
 

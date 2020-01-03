@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.atelier.R;
 import com.example.atelier.activities.EditPostActivity;
 import com.example.atelier.activities.LoginActivity;
@@ -30,6 +31,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,9 +64,6 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         holder.deletebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // holder.mDatabaseRef4.removeValue();
-
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
                 builder.setTitle("Confirm");
@@ -86,7 +85,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // Do nothing
+                        // Do nothingz
                         dialog.dismiss();
                     }
                 });
@@ -98,44 +97,41 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         });
 
 
-        if(uploadCurrent.getCategory() != null){
+        if (uploadCurrent.getCategory() != null) {
             holder.tag.setText("#" + uploadCurrent.getCategory());
-        }else{
+        } else {
             holder.tag.setVisibility(View.GONE);
         }
 
         long time2 = uploadCurrent.getTs();
         long mills2 = time2 - System.currentTimeMillis();
-        long days2 = mills2/(1000 * 60 * 60 * 24);
-        long hours2 = mills2/(1000 * 60 * 60);
-        long mins2 = (mills2/(1000*60)) % 60;
+        long days2 = mills2 / (1000 * 60 * 60 * 24);
+        long hours2 = mills2 / (1000 * 60 * 60);
+        long mins2 = (mills2 / (1000 * 60)) % 60;
 
         days2 = Math.abs(days2);
         hours2 = Math.abs(hours2);
 
 
-        if(hours2 >= 1) {
-                String diff = hours2 + " hours ago";
-                holder.t_counter.setText(diff);
-        }
-
-        if(hours2 >= 25) {
-            String diff = days2 + " days ago";
+        if (hours2 >= 1) {
+            String diff = hours2 + " hours ago";
             holder.t_counter.setText(diff);
         }
 
-        else {
-                mins2 = Math.abs(mins2);
-                String diff = mins2 + " minutes ago";
-                holder.t_counter.setText(diff);
-            }
+        if (hours2 >= 25) {
+            String diff = days2 + " days ago";
+            holder.t_counter.setText(diff);
+        } else {
+            mins2 = Math.abs(mins2);
+            String diff = mins2 + " minutes ago";
+            holder.t_counter.setText(diff);
+        }
 
         final String postId = uploadCurrent.getKey();
 
         holder.mDatabaseRef2 = holder.mDatabaseRef.child(postId);
         holder.mQueryCommentRef = holder.mCommentRef.orderByChild("c_PostID").equalTo(postId);
         holder.mQueryTimeRef = holder.mTimeRef;
-
 
 
         holder.mDBListener = holder.mQueryCommentRef.addValueEventListener(new ValueEventListener() {
@@ -150,7 +146,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
                     holder.mcUploads.add(c_upload);
                     holder.num = holder.mcUploads.size();
                     String numm = String.valueOf(holder.num);
-                    holder.c_counter.setText(numm +" Comments");
+                    holder.c_counter.setText(numm + " Comments");
 
                 }
             }
@@ -163,7 +159,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
         holder.editpen.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v ) {
+            public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), PostActivity.class);
                 intent.putExtra("p_id", postId);
                 mContext.startActivity(intent);
@@ -173,7 +169,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
         holder.commentbtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v ) {
+            public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), EditPostActivity.class);
                 intent.putExtra("p_id", postId);
                 mContext.startActivity(intent);
@@ -182,9 +178,9 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
         holder.bookmarkbtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v ) {
+            public void onClick(View v) {
 
-                if(holder.mCurrentUser != null) {
+                if (holder.mCurrentUser != null) {
                     Favorites upload;
                     upload = new Favorites(mUploads.get(position).getImage_url(), holder.mCurrentUser.getUid(), mUploads.get(position).getKey());
                     String uploadId = holder.mDatabaseRef.push().getKey();
@@ -192,9 +188,8 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
                     //change bookmark icon so it looks like it can't be clicked anymore.
                     holder.bookmarkbtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_bookmark_transp, 0, 0, 0);
-                }
-                else{
-                    Toast.makeText(mContext,"you are not loggeeeeeed in",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(mContext, "you are not loggeeeeeed in", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     mContext.startActivity(intent);
 
@@ -209,7 +204,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         return mUploads.size();
     }
 
-    public class ImageViewHolderMain extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ImageViewHolderMain extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView textViewName;
         public TextView c_counter;
@@ -245,7 +240,6 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
             mAuth = FirebaseAuth.getInstance();
             mCurrentUser = mAuth.getCurrentUser();
-         //   mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
             commentbtn = itemView.findViewById(R.id.comment_icon);
             deletebtn = itemView.findViewById(R.id.delete_icon);
             tag = itemView.findViewById(R.id.tag_inpost);
@@ -261,32 +255,25 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             mcUploads = new ArrayList<>();
             mpUploads = new ArrayList<>();
 
-          //  StorageReference forestRef = storageRef.child("Posts");
-
-
-            DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
 
             mCommentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
             mTimeRef = FirebaseDatabase.getInstance().getReference().child("Posts");
-            if(mCurrentUser != null) {
+            if (mCurrentUser != null) {
                 adminemail = mCurrentUser.getEmail();
-            }
-            else {
+            } else {
                 //nothing
             }
 
             if (mCurrentUser != null) {
 
-                if(adminemail.equals("admin@email.com")){
+                if (adminemail.equals("admin@email.com")) {
                     commentbtn.setVisibility(View.VISIBLE);
                     deletebtn.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     commentbtn.setVisibility(View.GONE);
                     deletebtn.setVisibility(View.GONE);
                 }
-            }
-            else if (mCurrentUser == null) {
+            } else if (mCurrentUser == null) {
                 commentbtn.setVisibility(View.GONE);
                 deletebtn.setVisibility(View.GONE);
             }

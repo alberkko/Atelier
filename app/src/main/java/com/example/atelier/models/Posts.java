@@ -1,4 +1,5 @@
 package com.example.atelier.models;
+
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.ServerValue;
 
@@ -11,7 +12,7 @@ public class Posts {
     private String image_url;
     private String mKey;
     private String userID;
-  //private HashMap<String, Object> timestampCreated;
+    //private HashMap<String, Object> timestampCreated;
     private String category;
     private String path;
     private long ts;
@@ -19,26 +20,21 @@ public class Posts {
     public Posts() {
     }
 
-    public Posts(long ts){
+    public Posts(long ts) {
         this.ts = ts;
     }
 
-    public Posts(String path,String image_url, String description, String userID, String category) {
+    public Posts(String path, String image_url, String description, String userID, String category) {
         //if description field left empty
         if (description.trim().equals("")) {
             description = "";
         }
-
 
         this.image_url = image_url;
         this.description = description;
         this.userID = userID;
         this.category = category;
         this.path = path;
-
-        /*  HashMap<String, Object> timestampNow = new HashMap<>();
-        timestampNow.put("timestamp", ServerValue.TIMESTAMP);
-        this.timestampCreated = timestampNow;   */
 
     }
 
@@ -54,7 +50,7 @@ public class Posts {
         return userID;
     }
 
-    public String getCategory(){
+    public String getCategory() {
         return category;
     }
 
@@ -66,24 +62,19 @@ public class Posts {
         return ts;
     }
 
-
-    /*
-    public HashMap<String, Object> getTimestampCreated(){
-        return timestampCreated;
-    }
-    */
-
     public void setDescription(String description) {
         this.description = description;
     }
+
     public void setImage_url(String image_url) {
         this.image_url = image_url;
     }
+
     public void setUserID(String userID) {
         this.userID = userID;
     }
 
-    public void setCategory(String category){
+    public void setCategory(String category) {
         this.category = category;
     }
 
@@ -105,9 +96,4 @@ public class Posts {
     public void setKey(String key) {
         mKey = key;
     }
-
-    /*  @Exclude
-    public long getTimestampCreatedLong(){
-        return (long)timestampCreated.get("timestamp");
-    }   */
 }

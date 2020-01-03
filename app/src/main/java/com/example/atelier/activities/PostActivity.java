@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.example.atelier.R;
 import com.example.atelier.adapters.RecyclerViewAdapterComment;
 import com.example.atelier.models.Comments;
@@ -82,7 +83,7 @@ public class PostActivity extends AppCompatActivity {
         mUsername.setText("Tier");
 
         //get comments from DB
-         mDatabaseRef.addValueEventListener(new ValueEventListener() {
+        mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -111,15 +112,14 @@ public class PostActivity extends AppCompatActivity {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                     String post_description = dataSnapshot.child("description").getValue(String.class);
                     String post_img = dataSnapshot.child("image_url").getValue(String.class);
-                  //  Toast.makeText(PostActivity.this, "post:::" + building_img, Toast.LENGTH_SHORT).show();
                     mPostDescription.setText(post_description);
                     Picasso.get().load(post_img).into(mPostImage);
                     String url = "https://firebasestorage.googleapis.com/v0/b/atlier-49a3a.appspot.com/o/Users%2F1577993085736.jpg?alt=media&token=d138a80b-6936-4bf9-83b5-a96eefe28c83";
                     Picasso.get().load(url).into(mAdminImage);
 
 
-                  //  Log.e("rcc","::userid::"+building_description);
-                  //  Log.e("rcc","::userid::"+building_img);
+                    //  Log.e("rcc","::userid::"+building_description);
+                    //  Log.e("rcc","::userid::"+building_img);
                 }
 
             }
@@ -174,21 +174,19 @@ public class PostActivity extends AppCompatActivity {
 
     private void uploadComment() {
         String sUsername = mEditTextFileName.getText().toString();
-        if(mCurrentUser ==null) {
+        if (mCurrentUser == null) {
             Toast.makeText(this, "You are not logged in", Toast.LENGTH_LONG).show();
-        }
-        else if (sUsername.matches("")) {
+        } else if (sUsername.matches("")) {
             Toast.makeText(this, "Type something", Toast.LENGTH_LONG).show();
 
-        }
-        else {
-                    mcUploads.clear();
-                    Comments upload;
-                    //call the constructor from the Posts class in "models" package
-                    upload = new Comments(mEditTextFileName.getText().toString().trim(), mAuth.getUid(),p_id);
-                    String uploadId = mDatabaseRef.push().getKey();
-                    mDatabaseRef.child(uploadId).setValue(upload);
-                    mEditTextFileName.setText("");
+        } else {
+            mcUploads.clear();
+            Comments upload;
+            //call the constructor from the Posts class in "models" package
+            upload = new Comments(mEditTextFileName.getText().toString().trim(), mAuth.getUid(), p_id);
+            String uploadId = mDatabaseRef.push().getKey();
+            mDatabaseRef.child(uploadId).setValue(upload);
+            mEditTextFileName.setText("");
         }
     }
 }

@@ -47,15 +47,13 @@ public class RecyclerViewAdapterComment extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(final ImageViewHolderComment holder, int position) {
         Comments uploadCurrent = mcUploads.get(position);
         holder.commentText.setText(uploadCurrent.getComment());
-//        holder.commentName.setText(uploadCurrent.getC_UserID());
-//
-//        get image from profile of user
-//
 
-      //  Log.e("rcc","::position::"+mcUploads.get(position));
-     //   Log.e("rcc","::comment::"+uploadCurrent.getComment());
-     //   Log.e("rcc","::profile photo::"+uploadCurrent.getProfile_p_url());
-     //   Log.e("rcc","::userid::"+uploadCurrent.getC_UserID());
+        //get image from profile of user
+
+        //   Log.e("rcc","::position::"+mcUploads.get(position));
+        //   Log.e("rcc","::comment::"+uploadCurrent.getComment());
+        //   Log.e("rcc","::profile photo::"+uploadCurrent.getProfile_p_url());
+        //   Log.e("rcc","::userid::"+uploadCurrent.getC_UserID());
 
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
@@ -78,23 +76,8 @@ public class RecyclerViewAdapterComment extends RecyclerView.Adapter<RecyclerVie
 
             }
         });
-
-//        DatabaseReference profile_photo = ref.child("Users").child(uploadCurrent.getC_UserID()).child("PROFILEPHOTO");
-//        name.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                String username = dataSnapshot.getValue(String.class);
-//                holder.commentName.setText(username);
-//
-//                Log.e("rcc","::userid::"+username);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
     }
+
 
     @Override
     public int getItemCount() {

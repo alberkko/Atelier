@@ -36,16 +36,12 @@ import androidx.appcompat.app.AppCompatActivity;
 public class EditUserProfileActivity extends AppCompatActivity {
 
     private static final int PICK_IMAGE_REQUEST = 1;
-
-//    private EditText mFirstName;
     private EditText mName;
     private EditText mBio;
     private DatabaseReference mDatabaseUser_name;
-//    private DatabaseReference mDatabaseUser_firstname;
     private DatabaseReference mDatabaseUser_bio;
     private FirebaseAuth mAuth;
     private DatabaseReference dbRef;
-//    private DatabaseReference dbRef2;
     private DatabaseReference dbRef3;
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
@@ -65,7 +61,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
         mChangeImage = findViewById(R.id.changeProfile);
         mProfilePhoto = findViewById(R.id.photo200);
-//        mFirstName = findViewById(R.id.username200);
         mBio = findViewById(R.id.bio200);
         mSave = findViewById(R.id.button_save);
         mAuth = FirebaseAuth.getInstance();
@@ -83,9 +78,8 @@ public class EditUserProfileActivity extends AppCompatActivity {
 
                 if (p_image != null && !p_image.isEmpty()) {
                     Picasso.get().load(p_image).into(mProfilePhoto);
-                }
-                else{
-                  //  Picasso.get().load(R.drawable.ic_person_black_24dp).into(mProfilePhoto);
+                } else {
+                    //  Picasso.get().load(R.drawable.ic_person_black_24dp).into(mProfilePhoto);
                 }
             }
 
@@ -114,17 +108,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
             }
         });
 
-        /*mDatabaseUser_firstname = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("firstname");
-        mDatabaseUser_firstname.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                mFirstName.setText(dataSnapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });*/
 
         mDatabaseUser_bio = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("bio");
         mDatabaseUser_bio.addValueEventListener(new ValueEventListener() {
@@ -145,10 +128,6 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 String setName = mName.getText().toString();
                 dbRef = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("name");
                 dbRef.setValue(setName);
-
-                /*String setFirstName = mFirstName.getText().toString();
-                dbRef2 = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("firstname");
-                dbRef2.setValue(setFirstName);*/
 
                 String setBio = mBio.getText().toString();
                 dbRef3 = FirebaseDatabase.getInstance().getReference().child("Users").child(user_id).child("bio");

@@ -5,8 +5,8 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#121214">
+    android:background="#121214"
+    android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -28,9 +28,7 @@
                 android:layout_height="match_parent"
                 android:adjustViewBounds="true"
                 android:padding="0dp"
-                android:scaleType="centerCrop"
-
-                />
+                android:scaleType="centerCrop" />
 
 
         </androidx.cardview.widget.CardView>
