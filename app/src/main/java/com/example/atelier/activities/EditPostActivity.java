@@ -144,7 +144,6 @@ public class EditPostActivity extends AppCompatActivity {
 
 
         //GET ALL TOGETHER
-
         mDatabaseUser_name.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
