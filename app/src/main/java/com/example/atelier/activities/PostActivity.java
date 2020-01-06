@@ -49,7 +49,6 @@ public class PostActivity extends AppCompatActivity {
     private TextView mUsername;
     private FirebaseAuth mAuth;
     private FirebaseUser mCurrentUser;
-    private DatabaseReference mDatabaseUser;
     private String p_id;
     private String Comment_id;
 
@@ -66,7 +65,6 @@ public class PostActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
-        // mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
         mButtonSend = findViewById(R.id.button_send);
         mEditTextFileName = findViewById(R.id.comment_field);
         mRecyclerView = findViewById(R.id.recycler_view_too);
