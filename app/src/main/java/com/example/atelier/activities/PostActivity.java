@@ -66,7 +66,7 @@ public class PostActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         mCurrentUser = mAuth.getCurrentUser();
-        mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
+        // mDatabaseUser = FirebaseDatabase.getInstance().getReference().child("Users").child(mCurrentUser.getUid());
         mButtonSend = findViewById(R.id.button_send);
         mEditTextFileName = findViewById(R.id.comment_field);
         mRecyclerView = findViewById(R.id.recycler_view_too);
@@ -170,7 +170,6 @@ public class PostActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void uploadComment() {
         String sUsername = mEditTextFileName.getText().toString();

@@ -101,7 +101,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
 
 
         if (uploadCurrent.getCategory() != null) {
-            holder.tag.setText("#" + uploadCurrent.getCategory());
+            holder.tag.setText("   #" + uploadCurrent.getCategory() + "   ");
         } else {
             holder.tag.setVisibility(View.GONE);
         }
@@ -163,9 +163,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         holder.editpen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PostActivity.class);
-                intent.putExtra("p_id", postId);
-                mContext.startActivity(intent);
+                Toast.makeText(mContext, "you are not loggeeeeeed in", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -259,6 +257,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             mpUploads = new ArrayList<>();
             mCommentRef = FirebaseDatabase.getInstance().getReference().child("Comments");
             mTimeRef = FirebaseDatabase.getInstance().getReference().child("Posts");
+
             if (mCurrentUser != null) {
                 adminemail = mCurrentUser.getEmail();
             } else {
@@ -277,6 +276,7 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
             } else if (mCurrentUser == null) {
                 commentbtn.setVisibility(View.GONE);
                 deletebtn.setVisibility(View.GONE);
+
             }
 
             itemView.setOnClickListener(this);

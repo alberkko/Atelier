@@ -129,7 +129,7 @@ public class UserProfileActivity extends AppCompatActivity implements RecyclerVi
                         Picasso.get().load(profile_photo).into(mProfilePhoto);
                     } else {
                         //do not retrieve photo
-                        //Picasso.get().load(R.drawable.ic_person_black_24dp).into(mProfilePhoto);
+                        //Picasso.get().load(R.drawable.ic_person_black_24dp).into(mProfilePhoto); aka placeholder
                     }
                 }
             }

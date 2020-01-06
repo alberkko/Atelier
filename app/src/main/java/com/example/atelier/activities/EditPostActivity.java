@@ -122,7 +122,7 @@ public class EditPostActivity extends AppCompatActivity {
                         String choice = spinner.getSelectedItem().toString();
                         if (!choice.equals(db_tag)) {
                             tag = choice;
-                            Toast.makeText(EditPostActivity.this, "u bo kategoria " + choice, Toast.LENGTH_LONG).show();
+                            //Toast.makeText(EditPostActivity.this, "u bo kategoria " + choice, Toast.LENGTH_LONG).show();
                         }
                     }
 
