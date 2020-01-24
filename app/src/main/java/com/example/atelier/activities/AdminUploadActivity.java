@@ -193,29 +193,7 @@ public class AdminUploadActivity extends AppCompatActivity {
                     mStorageRef2.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
                         @Override
                         public void onSuccess(StorageMetadata storageMetadata) {
-
-                            Calendar calendar = Calendar.getInstance();
-                            calendar.setTimeInMillis(storageMetadata.getCreationTimeMillis());
-
-                            long mills = storageMetadata.getCreationTimeMillis();
-
-
-                            Log.e("storage time", ":: " + storageMetadata.getCreationTimeMillis());
-                            Log.e("current time", ":: " + System.currentTimeMillis());
-
-                            //   long hours = mills/(1000 * 60 * 60);
-                            //   long mins = (mills/(1000*60)) % 60;
-                            //   String diff = hours + ":" + mins;
-
-                            int mYear = calendar.get(Calendar.YEAR);
-                            int mMonth = calendar.get(Calendar.MONTH);
-                            int cMonth = mMonth + 1;
-                            int mDay = calendar.get(Calendar.DAY_OF_MONTH);
-                            int hour = calendar.get(Calendar.HOUR_OF_DAY);
-                            int min = calendar.get(Calendar.MINUTE);
-
-                            //UPLOAD time
-                            String ts = hour + ":" + min + ", " + mDay + "/" + cMonth + "/" + mYear;
+//fsfsdffadad
                             mDatabaseRef.child(uploadId).child("ts").setValue(storageMetadata.getCreationTimeMillis());
 
 

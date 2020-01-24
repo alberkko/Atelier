@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.atelier.R;
 import com.example.atelier.activities.EditPostActivity;
 import com.example.atelier.activities.LoginActivity;
+import com.example.atelier.activities.MainActivity;
 import com.example.atelier.activities.PostActivity;
 import com.example.atelier.models.Comments;
 import com.example.atelier.models.Favorites;
@@ -115,7 +116,6 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
         days2 = Math.abs(days2);
         hours2 = Math.abs(hours2);
 
-
         if (hours2 >= 1) {
             String diff = hours2 + " hours ago";
             holder.t_counter.setText(diff);
@@ -150,6 +150,12 @@ public class RecyclerViewAdapterMain extends RecyclerView.Adapter<RecyclerViewAd
                     holder.num = holder.mcUploads.size();
                     String numm = String.valueOf(holder.num);
                     holder.c_counter.setText(numm + " Comments");
+
+
+                    //  Intent intent = new Intent(mContext, MainActivity.class);
+                    //  mContext.startActivity(intent);
+
+
 
                 }
             }
